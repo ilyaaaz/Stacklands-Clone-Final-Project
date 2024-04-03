@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Pack
   - Moon
+  - Background
   layers:
   - Default
   - TransparentFX

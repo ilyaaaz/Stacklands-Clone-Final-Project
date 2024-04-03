@@ -1,15 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
     public STATE currentState;
     // Start is called before the first frame update
-    [SerializeField] TextMeshProUGUI text;
+    [SerializeField] TextMeshProUGUI titleText, detailedText;
 
     void Start()
     {
@@ -27,7 +24,7 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         StateUpdate();
-        MouseCheck();
+        //MouseCheck();
     }
 
     void StateUpdate()
@@ -49,15 +46,26 @@ public class GameManager : MonoBehaviour
     void MouseCheck()
     {
         RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
-            
-            if (hit.collider != null)
+        if (hit.collider != null)
+        {
+            if (hit.collider.gameObject.name == "ANewWorld")
             {
-                Debug.Log("Hit " + hit.collider.gameObject.name);
-                if (hit.collider.gameObject.tag == "Moon")
-                {
-                    text.fontStyle = FontStyles.Bold | FontStyles.Underline;
-                    
-                }
-            }
+                MouseOnPack();
+            } 
+        } else
+        {
+            titleText.text = "";
+            detailedText.text = "";
+        }
+    }
+
+    void MouseOnPack()
+    {
+        titleText.text = "A NEW WORLD";
+        detailedText.text = "Open this Pack to get Cards!";
+        if (Input.GetMouseButtonDown(0))
+        {
+
+        }
     }
 }

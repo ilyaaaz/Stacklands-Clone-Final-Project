@@ -66,7 +66,7 @@ public class Moon : MonoBehaviour
     {
         moonText.fontStyle = FontStyles.Bold | FontStyles.Underline;
         titleText.text = "TIME";
-        detailedText.text = "The current time. There's " + (totalTime - currentTime) + "s left in this moon. \n \n" + "Use [Space] to pause or use [Tab] to toggle between game speeds" ; 
+        detailedText.text = "The current time. There's " + (totalTime - currentTime).ToString("0.0") + "s left in this moon. \n \n" + "Use [Space] to pause or use [Tab] to toggle between game speeds" ; 
     }
 
     public void ChangeBack()
