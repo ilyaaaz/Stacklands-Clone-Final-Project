@@ -8,7 +8,7 @@ using UnityEngine.UI;
 public class Moon : MonoBehaviour
 {
     [SerializeField] Slider slider;
-    [SerializeField] TextMeshProUGUI text;
+    [SerializeField] TextMeshProUGUI moonText, titleText, detailedText;
     float totalTime, currentTime, timer, speed;
 
     // Start is called before the first frame update
@@ -21,9 +21,7 @@ public class Moon : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        slideBar();
-        //mouseCheck();
-
+        SlideBar();
 
         //text.text = slider.value.ToString();
         if (currentTime >= totalTime)
@@ -34,7 +32,7 @@ public class Moon : MonoBehaviour
     }
     
     //change slideBar
-    void slideBar()
+    void SlideBar()
     {
         timer += Time.deltaTime;
         if (timer >= 0.1f)
@@ -59,21 +57,23 @@ public class Moon : MonoBehaviour
         slider.value = currentTime / totalTime;
     }
 
-    //check mouse ********** maychange
-    void mouseCheck()
+    public void ChangeFont()
+    {  
+        InvokeRepeating("RealTimeFont", 0, Time.deltaTime); 
+    }
+
+    void RealTimeFont()
     {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        RaycastHit hit;
-        if (Physics.Raycast(ray, out hit))
-        {
-            // Check if the collider belongs to the object you're interested in
-            if (hit.collider.gameObject == slider.gameObject)
-            {
-                text.fontStyle = FontStyles.Underline;
-            } else
-            {
-                text.fontStyle = FontStyles.Bold;
-            }
-        } 
+        moonText.fontStyle = FontStyles.Bold | FontStyles.Underline;
+        titleText.text = "TIME";
+        detailedText.text = "The current time. There's " + (totalTime - currentTime) + "s left in this moon. \n \n" + "Use [Space] to pause or use [Tab] to toggle between game speeds" ; 
+    }
+
+    public void ChangeBack()
+    {
+        moonText.fontStyle = FontStyles.Bold;
+        titleText.text = "";
+        detailedText.text = ""; 
+        CancelInvoke();
     }
 }
