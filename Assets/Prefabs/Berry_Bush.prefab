@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6427075383227350030}
   - component: {fileID: 8710954603209267370}
+  - component: {fileID: 6135520851431666549}
   m_Layer: 0
   m_Name: Berry_Bush
   m_TagString: Untagged
@@ -84,3 +85,15 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &6135520851431666549
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6907902188348354159}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7fbd9bdc46d04da4a8d014f828cec646, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
