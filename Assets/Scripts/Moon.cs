@@ -9,6 +9,8 @@ public class Moon : MonoBehaviour
 {
     [SerializeField] Slider slider;
     [SerializeField] TextMeshProUGUI moonText, titleText, detailedText;
+    [SerializeField] Sprite normalImage, stopImage, fastImage;
+    [SerializeField] Image stateImage;
     float totalTime, currentTime, timer, speed;
 
     // Start is called before the first frame update
@@ -43,14 +45,17 @@ public class Moon : MonoBehaviour
 
         if (GameManager.instance.currentState == GameManager.STATE.Normal)
         {
+            stateImage.sprite = normalImage;
             speed = 0.1f;
         }
         else if (GameManager.instance.currentState == GameManager.STATE.Fast)
         {
+            stateImage.sprite = fastImage;
             speed = 0.2f;
         }
         else if (GameManager.instance.currentState == GameManager.STATE.Stop)
         {
+            stateImage.sprite = stopImage;
             speed = 0;
         }
 
@@ -75,5 +80,21 @@ public class Moon : MonoBehaviour
         titleText.text = "";
         detailedText.text = ""; 
         CancelInvoke();
+    }
+
+    public void MouseClick()
+    {
+        if (GameManager.instance.currentState == GameManager.STATE.Normal)
+        {
+            GameManager.instance.currentState = GameManager.STATE.Fast;
+        }
+        else if (GameManager.instance.currentState == GameManager.STATE.Fast)
+        {
+            GameManager.instance.currentState = GameManager.STATE.Stop;
+        }
+        else if (GameManager.instance.currentState == GameManager.STATE.Stop)
+        {
+            GameManager.instance.currentState = GameManager.STATE.Normal;
+        }
     }
 }
