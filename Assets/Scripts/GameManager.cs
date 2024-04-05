@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     public List<GameObject> people = new List<GameObject>();
     public int cardNum, coinNum;
     int foodNum, maxStorage;
+    RaycastHit2D hit;
 
     void Start()
     {
@@ -31,7 +32,7 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         StateUpdate();
-        //MouseCheck();
+        MouseCheck();
         //FoodUpdate();
     }
 
@@ -76,27 +77,29 @@ public class GameManager : MonoBehaviour
 
     void MouseCheck()
     {
-        RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
+        if (!Input.GetMouseButton(0))
+        {
+             hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
+        }
         if (hit.collider != null)
         {
-            if (hit.collider.gameObject.name == "ANewWorld")
+            if (hit.collider.CompareTag("Card"))
             {
-                MouseOnPack();
+                MouseOnCard(hit.collider);
             } 
-        } else
-        {
-            titleText.text = "";
-            detailedText.text = "";
         }
     }
 
-    void MouseOnPack()
+    void MouseOnCard(Collider2D hit)
     {
-        titleText.text = "A NEW WORLD";
-        detailedText.text = "Open this Pack to get Cards!";
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButton(0))
         {
-
+            Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            hit.gameObject.transform.position = new Vector3(mousePos.x, mousePos.y, 0);
+            hit.isTrigger = true;
+        } else
+        {
+            hit.isTrigger = false;
         }
     }
 

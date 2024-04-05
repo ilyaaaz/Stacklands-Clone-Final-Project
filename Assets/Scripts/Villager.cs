@@ -4,7 +4,13 @@ using UnityEngine;
 
 public class Villager : MonoBehaviour
 {
+
     // Start is called before the first frame update
+
+    private void Awake()
+    {
+
+    }
     void Start()
     {
         GameManager.instance.people.Add(gameObject);
@@ -18,4 +24,5 @@ public class Villager : MonoBehaviour
     {
         
     }
+
 }

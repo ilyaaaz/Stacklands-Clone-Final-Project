@@ -2246,6 +2246,7 @@ GameObject:
   - component: {fileID: 1246532259}
   - component: {fileID: 1246532260}
   - component: {fileID: 1246532261}
+  - component: {fileID: 1246532262}
   m_Layer: 0
   m_Name: ANewWorld
   m_TagString: Pack
@@ -2262,7 +2263,7 @@ Transform:
   m_GameObject: {fileID: 1246532257}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.5769231, y: 0.5923077, z: -0.19343638}
+  m_LocalPosition: {x: -0.5769231, y: 0.5923077, z: 0}
   m_LocalScale: {x: 0.17692308, y: 0.17692308, z: 0.17692308}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -2585,6 +2586,33 @@ MonoBehaviour:
   - {fileID: 3749499101101271603, guid: cefbb646444b51d468822f50729c551b, type: 3}
   - {fileID: 2391338999073672170, guid: ea47aa52ce6b9f341986fb043c43c3ea, type: 3}
   - {fileID: 131287027661842051, guid: 9e9e85fa8ac567f4b99b71b1654d3688, type: 3}
+--- !u!50 &1246532262
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1246532257}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 1
+  m_Constraints: 4
 --- !u!1 &1347818158
 GameObject:
   m_ObjectHideFlags: 0
