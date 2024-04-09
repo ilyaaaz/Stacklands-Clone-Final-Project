@@ -97,10 +97,24 @@ public class GameManager : MonoBehaviour
             Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             hit.gameObject.transform.position = new Vector3(mousePos.x, mousePos.y, 0);
             hit.isTrigger = true;
-        } else
+            //stack hint
+            stackHint();
+        } 
+        else
         {
+            stackCheck();
             hit.isTrigger = false;
         }
+    }
+
+    void stackHint()
+    {
+
+    }
+
+    void stackCheck()
+    {
+
     }
 
     //update food item
@@ -137,3 +151,4 @@ public class GameManager : MonoBehaviour
         coinsText.text = coinNum.ToString();
     }
 }
+    

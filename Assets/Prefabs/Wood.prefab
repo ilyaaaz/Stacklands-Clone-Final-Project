@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: -6878750293591547297}
   - component: {fileID: 526328026028329276}
   - component: {fileID: -4895324898570091148}
+  - component: {fileID: 7008839815917928961}
   m_Layer: 0
   m_Name: Wood
   m_TagString: Card
@@ -171,3 +172,16 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 4.34, y: 5.24}
   m_EdgeRadius: 0
+--- !u!114 &7008839815917928961
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2391338999073672170}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2e518daf429c4630aaa4b77110b3ed9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  value: 1

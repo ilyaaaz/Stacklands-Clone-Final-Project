@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 6135520851431666549}
   - component: {fileID: -4062176781594589736}
   - component: {fileID: -6247130702555595138}
+  - component: {fileID: -3272471435104009678}
   m_Layer: 0
   m_Name: Berry_Bush
   m_TagString: Card
@@ -171,3 +172,16 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 4.34, y: 5.24}
   m_EdgeRadius: 0
+--- !u!114 &-3272471435104009678
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6907902188348354159}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2e518daf429c4630aaa4b77110b3ed9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  value: 1
