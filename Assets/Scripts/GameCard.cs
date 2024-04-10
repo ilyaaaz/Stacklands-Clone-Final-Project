@@ -5,9 +5,14 @@ using UnityEngine;
 
 public class GameCard : MonoBehaviour
 {
-    [SerializeField]
-    private int value = 1; //default value
-
-    public int Value => value;
+    public int value = 1; //default value
+/*
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        transform.position = collision.transform.position + Vector3.down*2;
+        collision.gameObject.GetComponent<Collider2D>().isTrigger = true;
+    }
+*/
 }
+
 
