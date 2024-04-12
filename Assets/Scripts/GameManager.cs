@@ -32,7 +32,7 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         StateUpdate();
-        MouseCheck();
+        //MouseCheck();
         //FoodUpdate();
     }
 
@@ -96,14 +96,18 @@ public class GameManager : MonoBehaviour
         {
             Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             hit.gameObject.transform.position = new Vector3(mousePos.x, mousePos.y, 0);
-            hit.isTrigger = true;
+            hit.enabled = false;
             //stack hint
             stackHint();
         } 
         else
         {
             stackCheck();
-            hit.isTrigger = false;
+            hit.enabled = true;
+        }
+        if (Input.GetMouseButtonUp(0))
+        {
+            hit.enabled = true;
         }
     }
 

@@ -10,12 +10,12 @@ GameObject:
   m_Component:
   - component: {fileID: 3662313971464346655}
   - component: {fileID: 3437121530410299929}
-  - component: {fileID: 6148303175949894465}
   - component: {fileID: -2967061731093689946}
   - component: {fileID: -6823363076463094126}
+  - component: {fileID: -7780700336106281635}
   m_Layer: 0
   m_Name: Coin
-  m_TagString: Card
+  m_TagString: Coin
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -87,18 +87,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &6148303175949894465
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 131287027661842051}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b612d5c1dc7db064395655eadcae879a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!50 &-2967061731093689946
 Rigidbody2D:
   serializedVersion: 4
@@ -115,7 +103,7 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 0
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 965645fc5a32ea94ca9706f1df1c6478, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -171,3 +159,17 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 4.34, y: 5.24}
   m_EdgeRadius: 0
+--- !u!114 &-7780700336106281635
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 131287027661842051}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2e518daf429c4630aaa4b77110b3ed9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  value: -1
+  startPos: {x: 0, y: 0, z: 0}

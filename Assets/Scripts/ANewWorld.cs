@@ -42,31 +42,18 @@ public class ANewWorld : MonoBehaviour
         {
             GameObject newCard = Instantiate(list[cardIndex]);
 
-            Vector3 circleCenter = transform.position; 
+            Vector3 circleCenter = transform.position;
 
-            float angle = cardIndex * Mathf.PI * 2f / list.Count; 
+            float angle = cardIndex * Mathf.PI * 2f / list.Count;
             float x = circleCenter.x + circleRadius * Mathf.Cos(angle);
             float y = circleCenter.y + circleRadius * Mathf.Sin(angle);
             Vector3 objectPosition = new Vector3(x, y, 0f);
             cardIndex++;
-            StartCoroutine(lerpCard(newCard, objectPosition)); 
-            
-        }
-    }
-    IEnumerator lerpCard(GameObject newCard, Vector3 objectPosition)
-    {
-        while (Vector3.Distance(newCard.transform.position, objectPosition) > 0.1f)
-        {
-            yield return new WaitForSeconds(0.01f);
-            newCard.transform.position = Vector3.Lerp(newCard.transform.position, objectPosition, 0.1f);
+            newCard.GetComponent<GameCard>().startPos = objectPosition;
             if (cardIndex == list.Count)
             {
-                if (Vector2.Distance(newCard.transform.position, objectPosition) < 0.1f)
-                {
-                    Destroy(gameObject);
-                }
+                Destroy(gameObject);
             }
         }
-
     }
 }
