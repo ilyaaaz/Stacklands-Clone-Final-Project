@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 526328026028329276}
   - component: {fileID: -4895324898570091148}
   - component: {fileID: 7008839815917928961}
+  - component: {fileID: 2716699731866486767}
   m_Layer: 0
   m_Name: Wood
   m_TagString: Card
@@ -173,3 +174,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   value: 1
   startPos: {x: 0, y: 0, z: 0}
+--- !u!114 &2716699731866486767
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2391338999073672170}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d34a2dbed111e4eb7be0994c90a45f38, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stackOffset: 0.1

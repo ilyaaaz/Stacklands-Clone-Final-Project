@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: -7199351069091272985}
   - component: {fileID: 810070379533911443}
   - component: {fileID: -3081425579202157856}
+  - component: {fileID: -7509653846810285849}
   m_Layer: 0
   m_Name: Rock
   m_TagString: Card
@@ -173,3 +174,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   value: 0
   startPos: {x: 0, y: 0, z: 0}
+--- !u!114 &-7509653846810285849
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3749499101101271603}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d34a2dbed111e4eb7be0994c90a45f38, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stackOffset: 0.1
