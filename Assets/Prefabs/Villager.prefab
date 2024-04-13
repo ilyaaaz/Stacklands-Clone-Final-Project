@@ -10,12 +10,12 @@ GameObject:
   m_Component:
   - component: {fileID: 8365804875093524237}
   - component: {fileID: 8452745080206935500}
-  - component: {fileID: -3124325405415487710}
   - component: {fileID: 1005483687951246824}
   - component: {fileID: 780887760845209133}
+  - component: {fileID: -8640770175442145367}
   m_Layer: 0
   m_Name: Villager
-  m_TagString: Card
+  m_TagString: Human
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -87,18 +87,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &-3124325405415487710
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4463371284818460278}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 10f164ab0153d184196a33259bc31281, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!50 &1005483687951246824
 Rigidbody2D:
   serializedVersion: 4
@@ -115,7 +103,7 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 0
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 965645fc5a32ea94ca9706f1df1c6478, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -171,3 +159,17 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 4.34, y: 5.24}
   m_EdgeRadius: 0
+--- !u!114 &-8640770175442145367
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4463371284818460278}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2e518daf429c4630aaa4b77110b3ed9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  value: 0
+  startPos: {x: 0, y: 0, z: 0}

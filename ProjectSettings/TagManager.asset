@@ -8,6 +8,9 @@ TagManager:
   - Moon
   - Background
   - Card
+  - Coin
+  - Food
+  - Human
   layers:
   - Default
   - TransparentFX
