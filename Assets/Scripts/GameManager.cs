@@ -7,10 +7,13 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
     public STATE currentState;
     [SerializeField] TextMeshProUGUI titleText, detailedText, foodText, storageText, coinsText;
+    public GameObject processBar;
     public List<GameObject> people = new List<GameObject>();
     public int cardNum, coinNum;
     int foodNum, maxStorage;
     RaycastHit2D hit;
+
+    public GameObject currentCard;
 
     void Start()
     {
