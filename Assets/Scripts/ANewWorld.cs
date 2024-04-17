@@ -52,6 +52,8 @@ public class ANewWorld : MonoBehaviour
             newCard.GetComponent<GameCard>().startPos = objectPosition;
             if (cardIndex == list.Count)
             {
+                titleText.text = "";
+                detailedText.text = "";
                 Destroy(gameObject);
             }
         }
