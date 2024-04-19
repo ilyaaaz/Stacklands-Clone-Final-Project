@@ -1,9 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class HideMenu : MonoBehaviour
 {
+    [SerializeField] TextMeshProUGUI hideMenuText, titleText, detailedText;
     bool closed;
     float hide_posX;
     RectTransform myRT;
@@ -33,4 +35,26 @@ public class HideMenu : MonoBehaviour
             closed = false;
         }
     }
+
+    public void ChangeFont()
+    {  
+        InvokeRepeating("TogglePannelFont", 0, Time.deltaTime); 
+    }
+
+    void TogglePannelFont()
+    {
+        hideMenuText.fontStyle = FontStyles.Bold | FontStyles.Underline;
+        titleText.text = "TOGGLE PANNEL";
+        detailedText.text = "Press this button or press [Q] to toggle the Quests and Ideas Tab"; 
+    }
+
+    public void ChangeBack()
+    {
+        hideMenuText.fontStyle = FontStyles.Bold;
+        titleText.text = "";
+        detailedText.text = ""; 
+        CancelInvoke();
+    }
 }
+
+

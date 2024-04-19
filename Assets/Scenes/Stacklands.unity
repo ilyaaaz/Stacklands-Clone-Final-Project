@@ -344,6 +344,7 @@ GameObject:
   - component: {fileID: 280364455}
   - component: {fileID: 280364457}
   - component: {fileID: 280364456}
+  - component: {fileID: 280364458}
   m_Layer: 5
   m_Name: Menu
   m_TagString: Untagged
@@ -408,6 +409,23 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 280364454}
   m_CullTransparentMesh: 1
+--- !u!114 &280364458
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 280364454}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c7df68f145cc4ea4b861ea63f143c47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  foodMenuText: {fileID: 1795684521}
+  coinMenuText: {fileID: 1795684521}
+  cardMenuText: {fileID: 1795684521}
+  titleText: {fileID: 300148115}
+  detailedText: {fileID: 1180390627}
 --- !u!1 &280661202
 GameObject:
   m_ObjectHideFlags: 0
@@ -723,6 +741,7 @@ GameObject:
   - component: {fileID: 325238711}
   - component: {fileID: 325238713}
   - component: {fileID: 325238712}
+  - component: {fileID: 325238714}
   m_Layer: 0
   m_Name: Food
   m_TagString: Untagged
@@ -846,6 +865,51 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 325238710}
   m_CullTransparentMesh: 1
+--- !u!114 &325238714
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 325238710}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 0
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 280364458}
+          m_TargetAssemblyTypeName: MenuManager, Assembly-CSharp
+          m_MethodName: FoodChangeFont
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 1
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 280364458}
+          m_TargetAssemblyTypeName: MenuManager, Assembly-CSharp
+          m_MethodName: FoodChangeBack
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &448439413
 GameObject:
   m_ObjectHideFlags: 0
@@ -1380,6 +1444,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef46cd041bc3120438315867792b266b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hideMenuText: {fileID: 1795684521}
+  titleText: {fileID: 300148115}
+  detailedText: {fileID: 1180390627}
 --- !u!1 &651864734
 GameObject:
   m_ObjectHideFlags: 0
@@ -1391,6 +1458,7 @@ GameObject:
   - component: {fileID: 651864735}
   - component: {fileID: 651864737}
   - component: {fileID: 651864736}
+  - component: {fileID: 651864738}
   m_Layer: 0
   m_Name: Coins
   m_TagString: Untagged
@@ -1514,6 +1582,51 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 651864734}
   m_CullTransparentMesh: 1
+--- !u!114 &651864738
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 651864734}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 0
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 280364458}
+          m_TargetAssemblyTypeName: MenuManager, Assembly-CSharp
+          m_MethodName: CoinChangeFont
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 1
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 280364458}
+          m_TargetAssemblyTypeName: MenuManager, Assembly-CSharp
+          m_MethodName: CoinChangeBack
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &683744778
 GameObject:
   m_ObjectHideFlags: 0
@@ -1692,6 +1805,7 @@ GameObject:
   - component: {fileID: 724180189}
   - component: {fileID: 724180190}
   - component: {fileID: 724180191}
+  - component: {fileID: 724180192}
   m_Layer: 0
   m_Name: CardSell
   m_TagString: Untagged
@@ -1824,6 +1938,51 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Coin: {fileID: 131287027661842051, guid: 9e9e85fa8ac567f4b99b71b1654d3688, type: 3}
+--- !u!114 &724180192
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 724180187}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 0
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 724180191}
+          m_TargetAssemblyTypeName: SellArea, Assembly-CSharp
+          m_MethodName: ChangeFont
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 1
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 724180191}
+          m_TargetAssemblyTypeName: SellArea, Assembly-CSharp
+          m_MethodName: ChangeBack
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &825951012
 GameObject:
   m_ObjectHideFlags: 0
@@ -2301,7 +2460,7 @@ MonoBehaviour:
     bottomLeft: {r: 1, g: 1, b: 1, a: 1}
     bottomRight: {r: 1, g: 1, b: 1, a: 1}
   m_fontColorGradientPreset: {fileID: 0}
-  m_spriteAsset: {fileID: 0}
+  m_spriteAsset: {fileID: 11400000, guid: 6de0f66da6e674247bb19a7f4c1dfcfa, type: 2}
   m_tintAllSprites: 0
   m_StyleSheet: {fileID: 0}
   m_TextStyleHashCode: -1183493901
@@ -3207,6 +3366,7 @@ GameObject:
   - component: {fileID: 1500082923}
   - component: {fileID: 1500082922}
   - component: {fileID: 1500082921}
+  - component: {fileID: 1500082924}
   m_Layer: 5
   m_Name: Hide Button
   m_TagString: Untagged
@@ -3327,6 +3487,51 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1500082919}
   m_CullTransparentMesh: 1
+--- !u!114 &1500082924
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1500082919}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 0
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 621903838}
+          m_TargetAssemblyTypeName: HideMenu, Assembly-CSharp
+          m_MethodName: ChangeFont
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 1
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 621903838}
+          m_TargetAssemblyTypeName: HideMenu, Assembly-CSharp
+          m_MethodName: ChangeBack
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &1552931877
 GameObject:
   m_ObjectHideFlags: 0
@@ -4203,6 +4408,7 @@ GameObject:
   - component: {fileID: 2036225979}
   - component: {fileID: 2036225981}
   - component: {fileID: 2036225980}
+  - component: {fileID: 2036225982}
   m_Layer: 0
   m_Name: Storage
   m_TagString: Untagged
@@ -4326,6 +4532,51 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2036225978}
   m_CullTransparentMesh: 1
+--- !u!114 &2036225982
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2036225978}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 0
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 280364458}
+          m_TargetAssemblyTypeName: MenuManager, Assembly-CSharp
+          m_MethodName: CardChangeFont
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 1
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 280364458}
+          m_TargetAssemblyTypeName: MenuManager, Assembly-CSharp
+          m_MethodName: CardChangeBack
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

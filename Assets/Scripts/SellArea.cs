@@ -36,5 +36,4 @@ public class SellArea : MonoBehaviour
             Destroy(collision.gameObject);
         }
     }
-
 }
