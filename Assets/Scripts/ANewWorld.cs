@@ -8,7 +8,7 @@ public class ANewWorld : MonoBehaviour
     [SerializeField] TextMeshProUGUI titleText, detailedText;
     [SerializeField] List<GameObject> list = new List<GameObject>();
     int cardIndex;
-    float circleRadius = 2f;
+    float circleRadius = 2.5f;
     // Start is called before the first frame update
     void Start()
     {

@@ -10,7 +10,10 @@ TagManager:
   - Card
   - Coin
   - Food
+  - Villager
   - Human
+  - Structure
+  - Resource
   layers:
   - Default
   - TransparentFX
