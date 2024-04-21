@@ -78,52 +78,6 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    void MouseCheck()
-    {
-        if (!Input.GetMouseButton(0))
-        {
-             hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
-        }
-        if (hit.collider != null)
-        {
-            if (hit.collider.CompareTag("Card"))
-            {
-                MouseOnCard(hit.collider);
-            } 
-        }
-    }
-
-    void MouseOnCard(Collider2D hit)
-    {
-        if (Input.GetMouseButton(0))
-        {
-            Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            hit.gameObject.transform.position = new Vector3(mousePos.x, mousePos.y, 0);
-            hit.enabled = false;
-            //stack hint
-            stackHint();
-        } 
-        else
-        {
-            stackCheck();
-            hit.enabled = true;
-        }
-        if (Input.GetMouseButtonUp(0))
-        {
-            hit.enabled = true;
-        }
-    }
-
-    void stackHint()
-    {
-
-    }
-
-    void stackCheck()
-    {
-
-    }
-
     //update food item
     public void FoodUpdate()
     {
@@ -156,6 +110,35 @@ public class GameManager : MonoBehaviour
     public void CoinUpdate()
     {
         coinsText.text = coinNum.ToString();
+    }
+
+    //stack card
+    public void StackCard(GameObject top, GameObject bot)
+    {
+        GameCard topCard = top.GetComponent<GameCard>();
+        GameCard botCard = bot.GetComponent<GameCard>();
+        /*
+        if (bot.layer == 6)
+        {
+            GameObject newBar = Instantiate(processBar);
+            newBar.transform.parent = bot.transform;
+            newBar.GetComponent<RectTransform>().anchoredPosition = new Vector2(bot.transform.position.x, bot.transform.position.y + 0.5f);
+        }
+        */
+        top.transform.position = bot.transform.position + Vector3.down * 0.3f;
+        //spr.sortingOrder = collision.transform.childCount;
+        topCard.isStack = true;
+        botCard.isStack = true;
+        botCard.child = top;
+        botCard.childCard = top.GetComponent<GameCard>();
+    }
+    
+    //separate card
+    public void SeparateCard(GameObject top, GameObject bot)
+    {
+        Vector3 dir = top.transform.position - bot.transform.position;
+        top.GetComponent<Rigidbody2D>().AddForce(dir * 5);
+        bot.GetComponent<Rigidbody2D>().AddForce(-dir * 5);
     }
 }
     

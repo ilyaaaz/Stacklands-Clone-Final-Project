@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Claims;
 using TMPro;
 using Unity.Burst.CompilerServices;
 using UnityEngine;
@@ -10,19 +11,21 @@ public class GameCard : MonoBehaviour
 {
     public int value = 0; //default value
     [HideInInspector] public Vector3 startPos;
-    [SerializeField] TextMeshProUGUI titleText, detailedText, valueText;
+    TextMeshProUGUI titleText, detailedText, valueText;
     
     Collider2D cld;
     Rigidbody2D rb;
     SpriteRenderer spr;
-    bool mouseUp;
+    public bool isStack, simulated;
+    public static bool mouseUp, mouseHold;
+    public GameObject child;
+    public GameCard childCard;
     
 
     private void Awake()
     {
         startPos = new Vector3(-7.85f, 2.85f, 0); //default value
         cld = GetComponent<Collider2D>();
-        //cld.isTrigger = true;
         spr = GetComponent<SpriteRenderer>();
         rb = GetComponent<Rigidbody2D>();
         titleText = GameObject.Find("TitleText (TMP)").GetComponent<TextMeshProUGUI>();
@@ -31,17 +34,27 @@ public class GameCard : MonoBehaviour
     }
     private void Start()
     {
+        child = null;
+        cld.enabled = false;
+        //cld.isTrigger = true;
         StartCoroutine(lerpCard(startPos));
         ItemsUpdate();
     }
 
     private void Update()
     {
+        if (GameManager.instance.currentCard == gameObject)
+        {
+            simulated = true;
+        } else
+        {
+            simulated = false;
+        }
         //if (Input.GetMouseButtonUp(0))
         //{
         //    Collider2D[] colliders = Physics2D.OverlapCollider(GetComponent<Collider2D>(),);
         //}
-        
+        //ReachTargetPos();
     }
 
     void ItemsUpdate()
@@ -72,6 +85,7 @@ public class GameCard : MonoBehaviour
         spr.sortingOrder = 100;
         GameManager.instance.currentCard = gameObject;
         mouseUp = false;
+        mouseHold = true;
         //cld.isTrigger = true;
     }
 
@@ -97,25 +111,23 @@ public class GameCard : MonoBehaviour
         mouseUp = true;
         //cld.isTrigger = false;
         spr.sortingOrder = 0;
+        mouseHold = false;
     }
 
-    private void OnTriggerStay2D(Collider2D collision)
+    private void OnTriggerExit2D(Collider2D collision)
     {
-        if (mouseUp)
+        //child = null;
+        //childCard = null;
+    }
+
+    public void ChildFollow()
+    {
+        if (child)
         {
-            transform.position = collision.transform.position + Vector3.down * 0.3f;
-            transform.parent = collision.transform;
-            spr.sortingOrder = collision.transform.childCount;
-            if (collision.gameObject.layer == 6)
-            {
-                GameObject newBar = Instantiate(GameManager.instance.processBar);
-                newBar.transform.parent = collision.transform;
-                newBar.GetComponent<RectTransform>().anchoredPosition = new Vector2(transform.position.x, collision.transform.position.y + 0.5f);
-            }
-            mouseUp = false;
+            print("1");
+            childCard.transform.position = transform.position + Vector3.down * 0.3f;
+            childCard.ChildFollow();
         }
-        //transform.parent = collision.transform;
-        //spr.sortingOrder = collision.gameObject.GetComponent<SpriteRenderer>().sortingOrder + 1;
     }
 
 
@@ -125,6 +137,20 @@ public class GameCard : MonoBehaviour
         {
             yield return new WaitForSeconds(0.01f);
             transform.position = Vector3.Lerp(transform.position, targetPos, 0.1f);
+            cld.enabled = false;
         }
+        if (Vector3.Distance(transform.position, targetPos) <= 0.1f)
+        {
+            StopCoroutine(lerpCard(startPos));
+            SetDefault();
+        }
+    }
+
+    void SetDefault()
+    {
+        //cld.isTrigger = false;
+        cld.enabled = true;
+        rb.drag = 8;
+        cld.isTrigger = true;
     }
 }
