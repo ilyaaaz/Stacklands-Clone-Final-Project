@@ -77,7 +77,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: bc08379c42cad428795b9efb5f2dd48b, type: 3}
+  m_Sprite: {fileID: 21300000, guid: b0c0d54baba2844139c8292077a29cb7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -173,9 +173,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: 0
-  startPos: {x: 0, y: 0, z: 0}
   isStack: 0
   simulated: 0
+  startPos: {x: 0, y: 0, z: 0}
   child: {fileID: 0}
   childCard: {fileID: 0}
 --- !u!114 &8805217958980416775
