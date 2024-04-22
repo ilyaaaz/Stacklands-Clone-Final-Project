@@ -10,17 +10,18 @@ public class GameCard : MonoBehaviour
 
 {
     public int value = 0; //default value
-    [HideInInspector] public Vector3 startPos;
     TextMeshProUGUI titleText, detailedText, valueText;
     
     Collider2D cld;
     Rigidbody2D rb;
     SpriteRenderer spr;
-    public bool isStack, simulated;
+    [HideInInspector] public bool isStack, simulated;
+    [HideInInspector] public Vector3 startPos;
     public static bool mouseUp, mouseHold;
     public GameObject child;
-    public GameCard childCard;
-    
+    [HideInInspector] public GameCard childCard;
+
+    Vector3 originalPos;
 
     private void Awake()
     {
@@ -35,9 +36,9 @@ public class GameCard : MonoBehaviour
     private void Start()
     {
         child = null;
-        cld.enabled = false;
+        //cld.enabled = false;
         //cld.isTrigger = true;
-        StartCoroutine(lerpCard(startPos));
+        StartCoroutine(lerpCard(gameObject, startPos));
         ItemsUpdate();
     }
 
@@ -50,6 +51,7 @@ public class GameCard : MonoBehaviour
         {
             simulated = false;
         }
+        //ChildFollow();
         //if (Input.GetMouseButtonUp(0))
         //{
         //    Collider2D[] colliders = Physics2D.OverlapCollider(GetComponent<Collider2D>(),);
@@ -95,7 +97,7 @@ public class GameCard : MonoBehaviour
         {
             titleText.text = "COIN";
             detailedText.text = "Humanity's best friend";
-            valueText.text = "Can't be sold";
+            //valueText.text = "Can't be sold";
         }
     }
 
@@ -116,32 +118,44 @@ public class GameCard : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        //child = null;
-        //childCard = null;
+        if (collision.gameObject == child)
+        {
+            if (transform.childCount > 0)
+            {
+                Destroy(transform.GetChild(0).gameObject);
+            }
+            child = null;
+            childCard = null;
+            isStack = false;
+        }
     }
 
-    public void ChildFollow()
+    void ChildFollow()
     {
-        if (child)
+        if (child != null)
         {
-            print("1");
-            childCard.transform.position = transform.position + Vector3.down * 0.3f;
-            childCard.ChildFollow();
+            if (transform.position != originalPos)
+            {
+                StartCoroutine(lerpCard(child, transform.position + Vector3.down * 0.3f));
+                childCard.ChildFollow();
+            }
         }
     }
 
 
-    IEnumerator lerpCard(Vector3 targetPos)
+    IEnumerator lerpCard(GameObject card, Vector3 targetPos)
     {
-        while (Vector3.Distance(transform.position, targetPos) > 0.1f)
+        while (Vector3.Distance(card.transform.position, targetPos) > 0.01f)
         {
             yield return new WaitForSeconds(0.01f);
-            transform.position = Vector3.Lerp(transform.position, targetPos, 0.1f);
+            card.transform.position = Vector3.Lerp(card.transform.position, targetPos, 0.1f);
             cld.enabled = false;
         }
-        if (Vector3.Distance(transform.position, targetPos) <= 0.1f)
+        if (Vector3.Distance(card.transform.position, targetPos) <= 0.01f)
         {
-            StopCoroutine(lerpCard(startPos));
+            card.transform.position = targetPos;
+            originalPos = card.transform.position;
+            StopCoroutine(lerpCard(card, startPos));
             SetDefault();
         }
     }

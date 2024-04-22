@@ -6,13 +6,13 @@ using UnityEngine.UI;
 public class Process : MonoBehaviour
 {
     [SerializeField] Slider slider;
-    Resource resource;
+    Product resource;
     float totalTime, currentTime, timer, speed;
 
     // Start is called before the first frame update
     void Start()
     {
-        resource = transform.parent.GetComponent<Resource>();
+        resource = GetComponentInParent<Product>();
         totalTime = 10f;
         currentTime = 0f;
         speed = 0.1f;
@@ -21,7 +21,7 @@ public class Process : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //SlideBar();
+        SlideBar();
     }
 
     void SlideBar()

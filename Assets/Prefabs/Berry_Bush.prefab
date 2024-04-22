@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 957566375631131134}
   - component: {fileID: -3272471435104009678}
   - component: {fileID: 512073882065858050}
+  - component: {fileID: 7797088820179993835}
   m_Layer: 6
   m_Name: Berry_Bush
   m_TagString: Structure
@@ -112,7 +113,7 @@ Rigidbody2D:
     serializedVersion: 2
     m_Bits: 0
   m_Interpolate: 0
-  m_SleepingMode: 0
+  m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
 --- !u!61 &957566375631131134
@@ -174,7 +175,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   value: 1
   startPos: {x: 0, y: 0, z: 0}
-  stackList: []
+  isStack: 0
+  simulated: 0
+  child: {fileID: 0}
+  childCard: {fileID: 0}
 --- !u!114 &512073882065858050
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -187,3 +191,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec836ce0311bcbc49ba1aa1d6a96be83, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &7797088820179993835
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6907902188348354159}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0c0d963aeb999c4084c1d507619e20a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  material: {fileID: 7698296764788612326, guid: 73df59ccf00320141a97edff5fbbf217, type: 3}
+  times: 3
