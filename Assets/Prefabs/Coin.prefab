@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: -2967061731093689946}
   - component: {fileID: -6823363076463094126}
   - component: {fileID: -7780700336106281635}
+  - component: {fileID: 1048599095040808769}
   m_Layer: 8
   m_Name: Coin
   m_TagString: Resource
@@ -111,7 +112,7 @@ Rigidbody2D:
     serializedVersion: 2
     m_Bits: 0
   m_Interpolate: 0
-  m_SleepingMode: 0
+  m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!61 &-6823363076463094126
@@ -143,7 +144,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -173,4 +174,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   value: -1
   startPos: {x: 0, y: 0, z: 0}
-  stackList: []
+  isStack: 0
+  simulated: 0
+  child: {fileID: 0}
+  childCard: {fileID: 0}
+--- !u!114 &1048599095040808769
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 131287027661842051}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5dd8f8830e8296449a29167dc5741df9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
