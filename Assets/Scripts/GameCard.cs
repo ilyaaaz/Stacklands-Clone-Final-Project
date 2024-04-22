@@ -97,7 +97,35 @@ public class GameCard : MonoBehaviour
         {
             titleText.text = "COIN";
             detailedText.text = "Humanity's best friend";
-            //valueText.text = "Can't be sold";
+            valueText.text = "Can't be sold";
+        }
+
+        if (gameObject.name == "Villager(Clone)")
+        {
+            titleText.text = "VILLAGER";
+            detailedText.text = "A hard-working pioneer";
+            valueText.text = "Can't be sold";
+        }
+
+        if (gameObject.name == "Berry_Bush(Clone)")
+        {
+            titleText.text = "BERRY BUSH";
+            detailedText.text = "A bush with delicious berries it";
+            valueText.text = "1";
+        }
+
+        if (gameObject.name == "Rock(Clone)")
+        {
+            titleText.text = "ROCK";
+            detailedText.text = "It looks sturdy, yet punchable";
+            valueText.text = "";
+        }
+
+        if (gameObject.name == "Wood(Clone)")
+        {
+            titleText.text = "WOOD";
+            detailedText.text = "A simple resource";
+            valueText.text = "1";
         }
     }
 
@@ -105,9 +133,10 @@ public class GameCard : MonoBehaviour
     {
         titleText.text = "";
         detailedText.text = "";
+        valueText.text = "";
     }
 
-    
+
     private void OnMouseUp()
     {
         mouseUp = true;
