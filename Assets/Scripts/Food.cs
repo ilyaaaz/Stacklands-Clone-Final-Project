@@ -17,8 +17,43 @@ public class Food : MonoBehaviour
 
     }
 
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        card.isColliding = false;
+        card.currentState = GameCard.STATE.NoCard;
+    }
+
     private void OnTriggerStay2D(Collider2D collision)
     {
+        /*
+        if (!collision.CompareTag("Pack"))
+        {
+            card.isColliding = true;
+            if (card.currentState == GameCard.STATE.NoCard)
+            {
+
+            }
+            else if (card.currentState == GameCard.STATE.CardDrag)
+            {
+
+            }
+            else if (card.currentState == GameCard.STATE.CardRelease)
+            {
+                if (collision.CompareTag("Food") || collision.CompareTag("Resource"))
+                {
+                    GameManager.instance.StackCard(gameObject, collision.gameObject);
+                    card.currentState = GameCard.STATE.NoCard;
+                } else
+                {
+                    if (!card.isStack)
+                    {
+                        GameManager.instance.SeparateCard(gameObject, collision.gameObject);
+                    }
+                }
+            }
+        }
+        */
+        
         if (!collision.CompareTag("Pack"))
         {
             if (GameCard.mouseUp && card.simulated && (collision.CompareTag("Food") || collision.CompareTag("Resource")))
@@ -34,6 +69,7 @@ public class Food : MonoBehaviour
                 }
             }
         }
+        
     }
 
     /*

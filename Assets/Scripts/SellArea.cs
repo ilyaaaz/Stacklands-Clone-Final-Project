@@ -34,6 +34,9 @@ public class SellArea : MonoBehaviour
 
             //destroy sold card.
             Destroy(collision.gameObject);
+        } else
+        {
+            StartCoroutine(card.lerpCard(collision.gameObject, gameObject.transform.position + Vector3.down * 3f));
         }
     }
 }

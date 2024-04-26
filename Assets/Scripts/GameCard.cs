@@ -11,17 +11,27 @@ public class GameCard : MonoBehaviour
 {
     public int value = 0; //default value
     TextMeshProUGUI titleText, detailedText, valueText;
+
     
     Collider2D cld;
     Rigidbody2D rb;
     SpriteRenderer spr;
-    [HideInInspector] public bool isStack, simulated;
+    [HideInInspector] public bool isStack, simulated, isColliding;
+    [HideInInspector] public static bool mouseUp, mouseHold;
     [HideInInspector] public Vector3 startPos;
-    public static bool mouseUp, mouseHold;
     public GameObject child;
     [HideInInspector] public GameCard childCard;
 
     Vector3 originalPos;
+
+    public STATE currentState;
+
+    public enum STATE
+    {
+        NoCard,
+        CardDrag,
+        CardRelease
+    }
 
     private void Awake()
     {
@@ -35,7 +45,9 @@ public class GameCard : MonoBehaviour
     }
     private void Start()
     {
+        currentState = STATE.NoCard;
         child = null;
+        isColliding = false;
         //cld.enabled = false;
         //cld.isTrigger = true;
         StartCoroutine(lerpCard(gameObject, startPos));
@@ -44,6 +56,7 @@ public class GameCard : MonoBehaviour
 
     private void Update()
     {
+        StateUpdate();
         if (GameManager.instance.currentCard == gameObject)
         {
             simulated = true;
@@ -57,6 +70,22 @@ public class GameCard : MonoBehaviour
         //    Collider2D[] colliders = Physics2D.OverlapCollider(GetComponent<Collider2D>(),);
         //}
         //ReachTargetPos();
+    }
+
+    void StateUpdate()
+    {
+        if (currentState == STATE.NoCard)
+        {
+            
+        }
+        else if (currentState == STATE.CardDrag)
+        {
+            
+        }
+        else if (currentState == STATE.CardRelease)
+        {
+            
+        }
     }
 
     void ItemsUpdate()
@@ -82,12 +111,13 @@ public class GameCard : MonoBehaviour
 
     private void OnMouseDrag()
     {
+        currentState = STATE.CardDrag;
         Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         transform.position = new Vector3(mousePos.x, mousePos.y, 0);
         spr.sortingOrder = 100;
         GameManager.instance.currentCard = gameObject;
-        mouseUp = false;
         mouseHold = true;
+        mouseUp = false;
         //cld.isTrigger = true;
     }
 
@@ -139,10 +169,19 @@ public class GameCard : MonoBehaviour
 
     private void OnMouseUp()
     {
-        mouseUp = true;
         //cld.isTrigger = false;
         spr.sortingOrder = 0;
+        mouseUp = true;
         mouseHold = false;
+        if (currentState == STATE.CardDrag && GameManager.instance.currentCard == gameObject && isColliding)
+        {
+            currentState = STATE.CardRelease;
+            GameManager.instance.currentCard = null;
+        } else
+        {
+            currentState = STATE.NoCard;
+        }
+        
     }
 
     private void OnTriggerExit2D(Collider2D collision)
@@ -172,7 +211,7 @@ public class GameCard : MonoBehaviour
     }
 
 
-    IEnumerator lerpCard(GameObject card, Vector3 targetPos)
+    public IEnumerator lerpCard(GameObject card, Vector3 targetPos)
     {
         while (Vector3.Distance(card.transform.position, targetPos) > 0.01f)
         {
@@ -193,7 +232,7 @@ public class GameCard : MonoBehaviour
     {
         //cld.isTrigger = false;
         cld.enabled = true;
-        rb.drag = 8;
+        rb.drag = 4;
         cld.isTrigger = true;
     }
 }
