@@ -24,6 +24,7 @@ public class GameManager : MonoBehaviour
         maxStorage = 20;
         instance = this;
         currentState = STATE.Normal;
+        currentCard = null;
     }
 
     public enum STATE { 
@@ -35,6 +36,7 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //print(currentCard);
         StateUpdate();
         //MouseCheck();
         //FoodUpdate();
@@ -130,7 +132,7 @@ public class GameManager : MonoBehaviour
         botCard.isStack = true;
         botCard.child = top;
         botCard.childCard = top.GetComponent<GameCard>();
-        currentCard = null;
+        //currentCard = null;
     }
     
     //separate card
@@ -139,15 +141,15 @@ public class GameManager : MonoBehaviour
         Vector3 dir = top.transform.position - bot.transform.position;
         top.GetComponent<Rigidbody2D>().AddForce(dir * 5);
         bot.GetComponent<Rigidbody2D>().AddForce(-dir * 5);
-        currentCard = null;
+        //currentCard = null;
     }
 
     void ProcessBarCheck (GameObject bot) {
         if (bot.layer == 6)
         {
             GameObject newBar = Instantiate(processBar);
-            newBar.transform.parent = bot.transform;
-            newBar.GetComponent<RectTransform>().anchoredPosition = new Vector2(bot.transform.position.x, bot.transform.position.y + 0.5f);
+            newBar.transform.SetParent(bot.transform);
+            newBar.GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
         }
     }
 }
