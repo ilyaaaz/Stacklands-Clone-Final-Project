@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4401958918552038340}
   - component: {fileID: 6116779727030141522}
   - component: {fileID: -3081425579202157856}
-  - component: {fileID: 8805217958980416775}
+  - component: {fileID: -2723397725998926525}
   m_Layer: 6
   m_Name: Rock
   m_TagString: Structure
@@ -113,7 +113,7 @@ Rigidbody2D:
     m_Bits: 0
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!61 &6116779727030141522
 BoxCollider2D:
@@ -144,7 +144,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -175,10 +175,12 @@ MonoBehaviour:
   value: 0
   isStack: 0
   simulated: 0
+  isColliding: 0
   startPos: {x: 0, y: 0, z: 0}
   child: {fileID: 0}
   childCard: {fileID: 0}
---- !u!114 &8805217958980416775
+  currentState: 0
+--- !u!114 &-2723397725998926525
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -187,6 +189,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 3749499101101271603}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ec836ce0311bcbc49ba1aa1d6a96be83, type: 3}
+  m_Script: {fileID: 11500000, guid: d0c0d963aeb999c4084c1d507619e20a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  material:
+  - {fileID: 4593602674261185754, guid: 6d56cb1bbe2bf4980a2741ad71e7d73e, type: 3}
+  - {fileID: 4593602674261185754, guid: f2215f3adb9a348c0bcbd61662da3644, type: 3}
+  times: 1

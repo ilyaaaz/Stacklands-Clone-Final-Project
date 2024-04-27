@@ -176,9 +176,11 @@ MonoBehaviour:
   value: 1
   isStack: 0
   simulated: 0
+  isColliding: 0
   startPos: {x: 0, y: 0, z: 0}
   child: {fileID: 0}
   childCard: {fileID: 0}
+  currentState: 0
 --- !u!114 &512073882065858050
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -203,5 +205,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0c0d963aeb999c4084c1d507619e20a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  material: {fileID: 7698296764788612326, guid: 73df59ccf00320141a97edff5fbbf217, type: 3}
+  material:
+  - {fileID: 7698296764788612326, guid: 73df59ccf00320141a97edff5fbbf217, type: 3}
   times: 3
