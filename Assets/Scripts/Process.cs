@@ -7,13 +7,13 @@ public class Process : MonoBehaviour
 {
     [SerializeField] Slider slider;
     Product resource;
-    float totalTime, currentTime, timer, speed;
+    [HideInInspector] public float totalTime = 10f;
+    float currentTime, timer, speed;
 
     // Start is called before the first frame update
     void Start()
     {
         resource = GetComponentInParent<Product>();
-        totalTime = 10f;
         currentTime = 0f;
         speed = 0.1f;
     }
@@ -22,6 +22,10 @@ public class Process : MonoBehaviour
     void Update()
     {
         SlideBar();
+        if (GetComponentInParent<GameCard>().child == null)
+        {
+            Destroy(gameObject);
+        }
     }
 
     void SlideBar()

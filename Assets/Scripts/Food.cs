@@ -19,8 +19,8 @@ public class Food : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        card.isColliding = false;
-        card.currentState = GameCard.STATE.NoCard;
+        //card.isColliding = false;
+        //card.currentState = GameCard.STATE.NoCard;
     }
 
     private void OnTriggerStay2D(Collider2D collision)

@@ -14,13 +14,13 @@ public class Structure : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        print("structure " + gameObject.name + " " +  card.currentState.ToString());
+        //print("structure " + gameObject.name + " " +  card.currentState.ToString());
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        card.isColliding = false;
-        card.currentState = GameCard.STATE.NoCard;
+        //card.isColliding = false;
+        //card.currentState = GameCard.STATE.NoCard;
     }
 
     private void OnTriggerStay2D(Collider2D collision)

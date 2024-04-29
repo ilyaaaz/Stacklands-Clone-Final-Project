@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class GameManager : MonoBehaviour
 {
@@ -10,11 +11,13 @@ public class GameManager : MonoBehaviour
     public GameObject processBar;
     public List<GameObject> people;
     public int cardNum, coinNum;
+    
     int foodNum, maxStorage;
     RaycastHit2D hit;
 
     public GameObject currentCard;
 
+    public List<GameCard> ideas;
     void Start()
     {
         people = new List<GameObject>();
@@ -126,31 +129,41 @@ public class GameManager : MonoBehaviour
             botCard = bot.GetComponent<GameCard>();
         }
         ProcessBarCheck(bot);
-        top.transform.position = bot.transform.position + Vector3.down * 0.3f;
+        StartCoroutine(topCard.lerpCard(top, bot.transform.position + Vector3.down * 0.3f));
+        //top.transform.position = bot.transform.position + Vector3.down * 0.3f;
         top.GetComponent<SpriteRenderer>().sortingOrder = bot.GetComponent<SpriteRenderer>().sortingOrder + 1;
         topCard.isStack = true;
         botCard.isStack = true;
         botCard.child = top;
         botCard.childCard = top.GetComponent<GameCard>();
-        //currentCard = null;
+        topCard.parent = bot;
+        topCard.parentCard = botCard.GetComponent<GameCard>();
+        currentCard = null;
     }
     
     //separate card
     public void SeparateCard(GameObject top, GameObject bot)
     {
         Vector3 dir = top.transform.position - bot.transform.position;
-        top.GetComponent<Rigidbody2D>().AddForce(dir * 5);
-        bot.GetComponent<Rigidbody2D>().AddForce(-dir * 5);
-        //currentCard = null;
+        dir.Normalize();
+        top.GetComponent<Rigidbody2D>().AddForce(dir * 4);
+        bot.GetComponent<Rigidbody2D>().AddForce(-dir * 4);
+        currentCard = null;
     }
 
     void ProcessBarCheck (GameObject bot) {
-        if (bot.layer == 6)
+        if (bot.gameObject.layer == 6)
         {
-            GameObject newBar = Instantiate(processBar);
-            newBar.transform.SetParent(bot.transform);
-            newBar.GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
+            ProcessBarCreate(bot, 10f);
         }
+    }
+
+    public void ProcessBarCreate(GameObject bot, float time)
+    {
+        GameObject newBar = Instantiate(processBar);
+        newBar.transform.SetParent(bot.transform);
+        newBar.GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
+        newBar.GetComponent<Process>().totalTime = time;
     }
 }
     

@@ -16,23 +16,30 @@ public class GameCard : MonoBehaviour
     Collider2D cld;
     Rigidbody2D rb;
     SpriteRenderer spr;
-    [HideInInspector] public bool isStack, simulated, isColliding;
+    [HideInInspector] public bool isStack, simulated;
     [HideInInspector] public static bool mouseUp, mouseHold;
     [HideInInspector] public Vector3 startPos;
-    public GameObject child;
-    [HideInInspector] public GameCard childCard;
+    public GameObject child, parent;
+    [HideInInspector] public GameCard childCard, parentCard;
+
+    [Header("Idea Product")]
+    public List<GameObject> materials = new List<GameObject>();
+    public List<int> matchingNum = new List<int>();
+    public int materialSize;
+    public float requireTime;
 
     Vector3 originalPos;
 
-    public STATE currentState;
+    //public STATE currentState;
 
+    /*
     public enum STATE
     {
         NoCard,
         CardDrag,
         CardRelease
     }
-
+    */
     private void Awake()
     {
         startPos = new Vector3(-7.85f, 2.85f, 0); //default value
@@ -45,9 +52,11 @@ public class GameCard : MonoBehaviour
     }
     private void Start()
     {
-        currentState = STATE.NoCard;
+        rb.mass = 0.4f;
+        //currentState = STATE.NoCard;
+        parent = null;
         child = null;
-        isColliding = false;
+        //isColliding = false;
         //cld.enabled = false;
         //cld.isTrigger = true;
         StartCoroutine(lerpCard(gameObject, startPos));
@@ -56,7 +65,7 @@ public class GameCard : MonoBehaviour
 
     private void Update()
     {
-        StateUpdate();
+        //StateUpdate();
         if (GameManager.instance.currentCard == gameObject)
         {
             simulated = true;
@@ -70,8 +79,12 @@ public class GameCard : MonoBehaviour
         //    Collider2D[] colliders = Physics2D.OverlapCollider(GetComponent<Collider2D>(),);
         //}
         //ReachTargetPos();
+        if (child == null && parent == null)
+        {
+            isStack = false;
+        }
     }
-
+    /*
     void StateUpdate()
     {
         if (currentState == STATE.NoCard)
@@ -87,7 +100,7 @@ public class GameCard : MonoBehaviour
             
         }
     }
-
+    */
     void ItemsUpdate()
     {
         if (CompareTag("Coin"))
@@ -95,7 +108,7 @@ public class GameCard : MonoBehaviour
             GameManager.instance.coinNum++;
             GameManager.instance.CoinUpdate();
         }
-        else if (CompareTag("Human"))
+        else if (CompareTag("Villager"))
         {
             GameManager.instance.people.Add(gameObject);
             GameManager.instance.FoodUpdate();
@@ -111,13 +124,19 @@ public class GameCard : MonoBehaviour
 
     private void OnMouseDrag()
     {
-        currentState = STATE.CardDrag;
+        //currentState = STATE.CardDrag;
         Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         transform.position = new Vector3(mousePos.x, mousePos.y, 0);
         spr.sortingOrder = 100;
         GameManager.instance.currentCard = gameObject;
         mouseHold = true;
         mouseUp = false;
+        if (parent != null)
+        {
+            parentCard.child = null;
+            parentCard.childCard = null;
+            parent = null;
+        }
         //cld.isTrigger = true;
     }
 
@@ -173,6 +192,8 @@ public class GameCard : MonoBehaviour
         spr.sortingOrder = 0;
         mouseUp = true;
         mouseHold = false;
+
+        /*
         if (currentState == STATE.CardDrag && GameManager.instance.currentCard == gameObject && isColliding)
         {
             currentState = STATE.CardRelease;
@@ -181,9 +202,10 @@ public class GameCard : MonoBehaviour
         {
             currentState = STATE.NoCard;
         }
+        */
         
     }
-
+    /*
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.gameObject == child)
@@ -197,7 +219,7 @@ public class GameCard : MonoBehaviour
             isStack = false;
         }
     }
-
+    */
     void ChildFollow()
     {
         if (child != null)
@@ -232,7 +254,7 @@ public class GameCard : MonoBehaviour
     {
         //cld.isTrigger = false;
         cld.enabled = true;
-        rb.drag = 4;
+        rb.drag = 8;
         cld.isTrigger = true;
     }
 }
