@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Security.Claims;
 using TMPro;
 using Unity.Burst.CompilerServices;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -84,7 +85,23 @@ public class GameCard : MonoBehaviour
         {
             isStack = false;
         }
+        ColliderChange();
     }
+
+    void ColliderChange()
+    {
+        if(child != null)
+        {
+            ((BoxCollider2D)cld).size = new Vector2(4.34f, 0.89f);
+            ((BoxCollider2D)cld).offset = new Vector2(0f, 2.09f);
+        }
+        else
+        {
+             ((BoxCollider2D)cld).size = new Vector2(4.34f, 5.24f);
+             ((BoxCollider2D)cld).offset = new Vector2(0f, 0f);
+        }
+    }
+
     /*
     void StateUpdate()
     {
