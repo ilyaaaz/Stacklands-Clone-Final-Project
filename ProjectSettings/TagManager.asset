@@ -15,6 +15,7 @@ TagManager:
   - Structure
   - Resource
   - Shop
+  - Mob
   layers:
   - Default
   - TransparentFX

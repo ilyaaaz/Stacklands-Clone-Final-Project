@@ -58,7 +58,7 @@ public class Structure : MonoBehaviour
         
         if (!collision.CompareTag("Pack"))
         {
-            if (GameCard.mouseUp && collision.name == gameObject.name && card.simulated)
+            if (GameCard.mouseUp && (collision.name == gameObject.name || collision.CompareTag("Resource")) && card.simulated)
             {
                 GameManager.instance.StackCard(gameObject, collision.gameObject);
                 GameCard.mouseUp = false;

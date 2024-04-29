@@ -4,6 +4,7 @@ using System.Security.Claims;
 using TMPro;
 using Unity.Burst.CompilerServices;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 
 public class GameCard : MonoBehaviour
@@ -131,6 +132,7 @@ public class GameCard : MonoBehaviour
         GameManager.instance.currentCard = gameObject;
         mouseHold = true;
         mouseUp = false;
+        ChildFollow();
         if (parent != null)
         {
             parentCard.child = null;
@@ -192,6 +194,7 @@ public class GameCard : MonoBehaviour
         spr.sortingOrder = 0;
         mouseUp = true;
         mouseHold = false;
+        SortChildLayer();
 
         /*
         if (currentState == STATE.CardDrag && GameManager.instance.currentCard == gameObject && isColliding)
@@ -203,7 +206,7 @@ public class GameCard : MonoBehaviour
             currentState = STATE.NoCard;
         }
         */
-        
+
     }
     /*
     private void OnTriggerExit2D(Collider2D collision)
@@ -224,14 +227,28 @@ public class GameCard : MonoBehaviour
     {
         if (child != null)
         {
+            child.transform.position = transform.position + Vector3.down * 0.3f;
+            childCard.ChildFollow();
+            SortChildLayer();
+            /*
             if (transform.position != originalPos)
             {
                 StartCoroutine(lerpCard(child, transform.position + Vector3.down * 0.3f));
                 childCard.ChildFollow();
             }
+            */
         }
     }
 
+    void SortChildLayer()
+    {
+        GameCard tempChild = childCard;
+        while (tempChild != null)
+        {
+            tempChild.spr.sortingOrder = spr.sortingOrder + 1;
+            tempChild = tempChild.childCard;
+        }
+    }
 
     public IEnumerator lerpCard(GameObject card, Vector3 targetPos)
     {

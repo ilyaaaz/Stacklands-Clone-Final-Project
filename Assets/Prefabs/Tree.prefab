@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: -3081425579202157856}
   - component: {fileID: -2723397725998926525}
   m_Layer: 6
-  m_Name: Rock
+  m_Name: Tree
   m_TagString: Structure
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -77,7 +77,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: b0c0d54baba2844139c8292077a29cb7, type: 3}
+  m_Sprite: {fileID: 21300000, guid: fbf7e73d9bd974a0590e24bdb2b38374, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
