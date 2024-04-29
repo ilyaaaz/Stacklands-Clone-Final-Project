@@ -173,11 +173,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: -1
-  startPos: {x: 0, y: 0, z: 0}
   isStack: 0
   simulated: 0
+  startPos: {x: 0, y: 0, z: 0}
   child: {fileID: 0}
+  parent: {fileID: 0}
   childCard: {fileID: 0}
+  parentCard: {fileID: 0}
+  materials: []
+  matchingNum: 
+  materialSize: 0
+  requireTime: 0
 --- !u!114 &3307773423961939186
 MonoBehaviour:
   m_ObjectHideFlags: 0
