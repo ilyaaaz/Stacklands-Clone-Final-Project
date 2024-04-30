@@ -20,7 +20,7 @@ public class GameCard : MonoBehaviour
     SpriteRenderer spr;
     [HideInInspector] public bool isStack, simulated;
     [HideInInspector] public static bool mouseUp, mouseHold;
-    [HideInInspector] public Vector3 startPos;
+    [HideInInspector] public Vector3 startPos, parentOrigin;
     public GameObject child, parent;
     [HideInInspector] public GameCard childCard, parentCard;
 
@@ -30,7 +30,7 @@ public class GameCard : MonoBehaviour
     public int materialSize;
     public float requireTime;
 
-    Vector3 originalPos;
+    Vector3 offSet;
 
     //public STATE currentState;
 
@@ -75,7 +75,7 @@ public class GameCard : MonoBehaviour
         {
             simulated = false;
         }
-        //ChildFollow();
+        ChildFollow();
         //if (Input.GetMouseButtonUp(0))
         //{
         //    Collider2D[] colliders = Physics2D.OverlapCollider(GetComponent<Collider2D>(),);
@@ -140,16 +140,23 @@ public class GameCard : MonoBehaviour
         }
     }
 
+    private void OnMouseDown()
+    {
+        Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        offSet = transform.position - mousePos;
+    }
+
     private void OnMouseDrag()
     {
         //currentState = STATE.CardDrag;
         Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         transform.position = new Vector3(mousePos.x, mousePos.y, 0);
+        //transform.position = new Vector3(mousePos.x, mousePos.y, 0) + offSet;
         spr.sortingOrder = 100;
         GameManager.instance.currentCard = gameObject;
         mouseHold = true;
         mouseUp = false;
-        ChildFollow();
+        //ChildFollow();
         if (parent != null)
         {
             parentCard.child = null;
@@ -211,7 +218,7 @@ public class GameCard : MonoBehaviour
         spr.sortingOrder = 0;
         mouseUp = true;
         mouseHold = false;
-        SortChildLayer();
+        SortLayer();
 
         /*
         if (currentState == STATE.CardDrag && GameManager.instance.currentCard == gameObject && isColliding)
@@ -242,11 +249,16 @@ public class GameCard : MonoBehaviour
     */
     void ChildFollow()
     {
-        if (child != null)
+        if (parent != null)
         {
-            child.transform.position = transform.position + Vector3.down * 0.3f;
-            childCard.ChildFollow();
-            SortChildLayer();
+            if (parentOrigin != parent.transform.position)
+            {
+                transform.position = parent.transform.position + Vector3.down * 0.3f;
+                parentOrigin = parent.transform.position;
+            }
+            
+            //childCard.ChildFollow();
+            
             /*
             if (transform.position != originalPos)
             {
@@ -255,9 +267,13 @@ public class GameCard : MonoBehaviour
             }
             */
         }
+        if (child != null)
+        {
+            SortLayer();
+        }
     }
 
-    void SortChildLayer()
+    void SortLayer()
     {
         GameCard tempChild = childCard;
         while (tempChild != null)
@@ -278,7 +294,7 @@ public class GameCard : MonoBehaviour
         if (Vector3.Distance(card.transform.position, targetPos) <= 0.01f)
         {
             card.transform.position = targetPos;
-            originalPos = card.transform.position;
+            //originalPos = card.transform.position;
             StopCoroutine(lerpCard(card, startPos));
             SetDefault();
         }

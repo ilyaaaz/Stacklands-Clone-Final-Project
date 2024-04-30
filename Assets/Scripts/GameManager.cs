@@ -152,7 +152,7 @@ public class GameManager : MonoBehaviour
     }
 
     void ProcessBarCheck (GameObject bot) {
-        if (bot.gameObject.layer == 6)
+        if (bot.CompareTag("Structure"))
         {
             ProcessBarCreate(bot, 10f);
         }

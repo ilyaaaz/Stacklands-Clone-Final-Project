@@ -20,7 +20,7 @@ public class Villager : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (!collision.CompareTag("Pack"))
+        if (collision.gameObject.layer == 6)
         {
             if (GameCard.mouseUp && card.simulated)
             {

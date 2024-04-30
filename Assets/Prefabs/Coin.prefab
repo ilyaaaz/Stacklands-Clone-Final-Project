@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: -6823363076463094126}
   - component: {fileID: -7780700336106281635}
   - component: {fileID: 1048599095040808769}
-  m_Layer: 8
+  m_Layer: 6
   m_Name: Coin
   m_TagString: Resource
   m_Icon: {fileID: 0}
@@ -176,8 +176,15 @@ MonoBehaviour:
   isStack: 0
   simulated: 0
   startPos: {x: 0, y: 0, z: 0}
+  parentOrigin: {x: 0, y: 0, z: 0}
   child: {fileID: 0}
+  parent: {fileID: 0}
   childCard: {fileID: 0}
+  parentCard: {fileID: 0}
+  materials: []
+  matchingNum: 
+  materialSize: 0
+  requireTime: 0
 --- !u!114 &1048599095040808769
 MonoBehaviour:
   m_ObjectHideFlags: 0

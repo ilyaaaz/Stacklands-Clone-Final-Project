@@ -54,7 +54,7 @@ public class Food : MonoBehaviour
         }
         */
         
-        if (!collision.CompareTag("Pack"))
+        if (collision.gameObject.layer == 6)
         {
             if (GameCard.mouseUp && card.simulated && (collision.CompareTag("Food") || collision.CompareTag("Resource")))
             {

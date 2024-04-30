@@ -56,7 +56,7 @@ public class Structure : MonoBehaviour
         }
         */
         
-        if (!collision.CompareTag("Pack"))
+        if (collision.gameObject.layer == 6)
         {
             if (GameCard.mouseUp && (collision.name == gameObject.name || collision.CompareTag("Resource")) && card.simulated)
             {

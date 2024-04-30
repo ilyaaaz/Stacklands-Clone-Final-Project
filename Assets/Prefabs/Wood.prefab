@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: -4895324898570091148}
   - component: {fileID: 7008839815917928961}
   - component: {fileID: 5063386022664420962}
-  m_Layer: 9
+  m_Layer: 6
   m_Name: Wood
   m_TagString: Resource
   m_Icon: {fileID: 0}
@@ -177,7 +177,13 @@ MonoBehaviour:
   simulated: 0
   startPos: {x: 0, y: 0, z: 0}
   child: {fileID: 0}
+  parent: {fileID: 0}
   childCard: {fileID: 0}
+  parentCard: {fileID: 0}
+  materials: []
+  matchingNum: 
+  materialSize: 0
+  requireTime: 0
 --- !u!114 &5063386022664420962
 MonoBehaviour:
   m_ObjectHideFlags: 0

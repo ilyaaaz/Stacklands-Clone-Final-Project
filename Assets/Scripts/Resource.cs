@@ -54,7 +54,7 @@ public class Resource : MonoBehaviour
         }
         */
         
-        if (!collision.CompareTag("Pack") && !collision.CompareTag("Shop"))
+        if (collision.gameObject.layer == 6)
         {
             if (GameCard.mouseUp && card.simulated && (collision.CompareTag("Resource") || collision.CompareTag("Villager")))
             {
