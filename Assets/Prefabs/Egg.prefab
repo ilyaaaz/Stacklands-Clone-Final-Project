@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 7364967435831977841}
   - component: {fileID: 5345283438439722961}
   - component: {fileID: 8519280607441820971}
-  m_Layer: 6
+  m_Layer: 10
   m_Name: Egg
   m_TagString: Food
   m_Icon: {fileID: 0}
@@ -176,6 +176,7 @@ MonoBehaviour:
   isStack: 0
   simulated: 0
   startPos: {x: 0, y: 0, z: 0}
+  parentOrigin: {x: 0, y: 0, z: 0}
   child: {fileID: 0}
   parent: {fileID: 0}
   childCard: {fileID: 0}

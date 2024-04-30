@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 6116779727030141522}
   - component: {fileID: -3081425579202157856}
   - component: {fileID: -2723397725998926525}
-  m_Layer: 6
+  m_Layer: 10
   m_Name: Soil
   m_TagString: Structure
   m_Icon: {fileID: 0}
@@ -176,6 +176,7 @@ MonoBehaviour:
   isStack: 0
   simulated: 0
   startPos: {x: 0, y: 0, z: 0}
+  parentOrigin: {x: 0, y: 0, z: 0}
   child: {fileID: 0}
   parent: {fileID: 0}
   childCard: {fileID: 0}

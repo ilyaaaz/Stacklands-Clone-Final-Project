@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: -3877299258237995816}
   - component: {fileID: 5464571719661417434}
   - component: {fileID: 4694718834573946336}
-  m_Layer: 6
+  m_Layer: 10
   m_Name: Flint
   m_TagString: Resource
   m_Icon: {fileID: 0}
@@ -176,6 +176,7 @@ MonoBehaviour:
   isStack: 0
   simulated: 0
   startPos: {x: 0, y: 0, z: 0}
+  parentOrigin: {x: 0, y: 0, z: 0}
   child: {fileID: 0}
   parent: {fileID: 0}
   childCard: {fileID: 0}

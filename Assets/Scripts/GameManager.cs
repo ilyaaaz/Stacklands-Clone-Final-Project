@@ -11,7 +11,8 @@ public class GameManager : MonoBehaviour
     public GameObject processBar;
     public List<GameObject> people;
     public int cardNum, coinNum;
-    
+    public PolygonCollider2D leftEdgeCollider, rightEdgeCollider, topEdgeCollider, bottomEdgeCollider;
+
     int foodNum, maxStorage;
     RaycastHit2D hit;
 
@@ -43,7 +44,11 @@ public class GameManager : MonoBehaviour
         StateUpdate();
         //MouseCheck();
         //FoodUpdate();
-    }
+        if (currentCard != null)
+        {
+            currentCard.transform.position = GetClampedPosition(currentCard.transform.position);
+        }
+    }  
 
     void StateUpdate()
     {
@@ -83,7 +88,20 @@ public class GameManager : MonoBehaviour
             }
         }
     }
+    //gameboard edge detection
+    Vector3 GetClampedPosition(Vector3 position)
+    {
+        float minX = leftEdgeCollider.bounds.max.x;
+        float maxX = rightEdgeCollider.bounds.min.x;
+        float minY = bottomEdgeCollider.bounds.max.y;
+        float maxY = topEdgeCollider.bounds.min.y;
 
+        // Clamp the card's position within the bounds of the gameboard defined by the PolygonCollider2D.
+        float clampedX = Mathf.Clamp(position.x, minX, maxX);
+        float clampedY = Mathf.Clamp(position.y, minY, maxY);
+
+        return new Vector3(clampedX, clampedY, position.z);
+    }
     //update food item
     public void FoodUpdate()
     {

@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: -3272471435104009678}
   - component: {fileID: 512073882065858050}
   - component: {fileID: 7797088820179993835}
-  m_Layer: 6
+  m_Layer: 10
   m_Name: Berry_Bush
   m_TagString: Structure
   m_Icon: {fileID: 0}
@@ -176,11 +176,16 @@ MonoBehaviour:
   value: 1
   isStack: 0
   simulated: 0
-  isColliding: 0
   startPos: {x: 0, y: 0, z: 0}
+  parentOrigin: {x: 0, y: 0, z: 0}
   child: {fileID: 0}
+  parent: {fileID: 0}
   childCard: {fileID: 0}
-  currentState: 0
+  parentCard: {fileID: 0}
+  materials: []
+  matchingNum: 
+  materialSize: 0
+  requireTime: 0
 --- !u!114 &512073882065858050
 MonoBehaviour:
   m_ObjectHideFlags: 0

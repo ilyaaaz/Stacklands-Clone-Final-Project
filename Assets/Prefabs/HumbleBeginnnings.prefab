@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2473461152482476663}
   - component: {fileID: -1838860614930455235}
   - component: {fileID: -1503544080234653402}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: HumbleBeginnnings
   m_TagString: Untagged
   m_Icon: {fileID: 0}
