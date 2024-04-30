@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: -3877299258237995816}
   - component: {fileID: 5464571719661417434}
   - component: {fileID: 8827633816728579428}
-  m_Layer: 9
+  m_Layer: 6
   m_Name: Stone
   m_TagString: Resource
   m_Icon: {fileID: 0}
@@ -175,11 +175,15 @@ MonoBehaviour:
   value: 1
   isStack: 0
   simulated: 0
-  isColliding: 0
   startPos: {x: 0, y: 0, z: 0}
   child: {fileID: 0}
+  parent: {fileID: 0}
   childCard: {fileID: 0}
-  currentState: 0
+  parentCard: {fileID: 0}
+  materials: []
+  matchingNum: 
+  materialSize: 0
+  requireTime: 0
 --- !u!114 &8827633816728579428
 MonoBehaviour:
   m_ObjectHideFlags: 0
