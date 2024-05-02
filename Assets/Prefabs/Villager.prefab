@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 8516819767986476030}
   - component: {fileID: -8640770175442145367}
   - component: {fileID: 3307773423961939186}
+  - component: {fileID: -1792368354519781548}
   m_Layer: 6
   m_Name: Villager
   m_TagString: Villager
@@ -176,6 +177,7 @@ MonoBehaviour:
   isStack: 0
   simulated: 0
   startPos: {x: 0, y: 0, z: 0}
+  parentOrigin: {x: 0, y: 0, z: 0}
   child: {fileID: 0}
   parent: {fileID: 0}
   childCard: {fileID: 0}
@@ -196,3 +198,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f77419540ee7fb46822680eb7d9d37c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &-1792368354519781548
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4463371284818460278}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d980fdd880a06f48ac661def8182bba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 15
+  currentHealth: 15

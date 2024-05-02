@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 8452745080206935500}
   - component: {fileID: 7504907879418858261}
   - component: {fileID: 8516819767986476030}
-  - component: {fileID: -8640770175442145367}
-  - component: {fileID: 3307773423961939186}
+  - component: {fileID: 7000332923464966226}
+  - component: {fileID: 8919580393750470533}
   m_Layer: 6
   m_Name: Rat
   m_TagString: Mob
@@ -160,7 +160,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 4.34, y: 5.24}
   m_EdgeRadius: 0
---- !u!114 &-8640770175442145367
+--- !u!114 &7000332923464966226
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -169,22 +169,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 4463371284818460278}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e2e518daf429c4630aaa4b77110b3ed9, type: 3}
+  m_Script: {fileID: 11500000, guid: 2d980fdd880a06f48ac661def8182bba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  value: -1
-  isStack: 0
-  simulated: 0
-  startPos: {x: 0, y: 0, z: 0}
-  child: {fileID: 0}
-  parent: {fileID: 0}
-  childCard: {fileID: 0}
-  parentCard: {fileID: 0}
-  materials: []
-  matchingNum: 
-  materialSize: 0
-  requireTime: 0
---- !u!114 &3307773423961939186
+  maxHealth: 5
+  currentHealth: 5
+--- !u!114 &8919580393750470533
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -193,6 +183,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 4463371284818460278}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1f77419540ee7fb46822680eb7d9d37c, type: 3}
+  m_Script: {fileID: 11500000, guid: a644a4f78677b914695b77ff7e325fc8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  moveSpeed: 30
+  cooldownTime: 2
