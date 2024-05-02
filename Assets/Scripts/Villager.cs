@@ -6,16 +6,23 @@ using UnityEngine;
 public class Villager : MonoBehaviour
 {
     GameCard card;
-    List<GameObject> stackList = new List<GameObject>();
+    [HideInInspector] public List<GameObject> stackList;
+    [HideInInspector] public bool checkOnce;
     // Start is called before the first frame update
     void Start()
     {
         card = GetComponent<GameCard>();
+        checkOnce = false;
     }
 
     private void Update()
     {
-        //MakeStackList();
+        MakeStackList();
+    }
+
+    private void OnMouseDown()
+    {
+        checkOnce = false;
     }
 
     private void OnTriggerStay2D(Collider2D collision)
@@ -39,33 +46,38 @@ public class Villager : MonoBehaviour
 
     void MakeStackList()
     {
-        if (card.parent != null)
+        if (!checkOnce)
         {
-            int size = 0;
-            GameCard curCard = card.parentCard;
-            while (curCard != null)
+            stackList = new List<GameObject>();
+            if (card.parent != null)
             {
-                stackList.Add(card.parent);
-                curCard = curCard.parentCard;
-                size++;
+                int size = 0;
+                GameCard curCard = card.parentCard;
+                while (curCard != null)
+                {
+                    stackList.Add(curCard.gameObject);
+                    curCard = curCard.parentCard;
+                    size++;
+                }
+                CheckStackProduct(size);
             }
-            CheckStackProduct(size);
         }
     }
 
     void CheckStackProduct(int size)
     {
+        checkOnce = true;
         for (int i = 0; i < GameManager.instance.ideas.Count; i++)
         {
             GameCard idea = GameManager.instance.ideas[i];
             if (idea.materialSize == size)
             {
                 bool result = true;
-                for (int j = 0; j < idea.materials.Count; i++)
+                for (int j = 0; j < idea.materials.Count; j++)
                 {
                     GameObject material = idea.materials[j];
                     int materialNum = idea.matchingNum[j];
-                    int count = stackList.FindAll(obj => obj.name == material.name).Count;
+                    int count = stackList.FindAll(obj => obj.name.Contains(material.name)).Count;
                     if (materialNum != count)
                     {
                         result = false;
@@ -74,7 +86,7 @@ public class Villager : MonoBehaviour
                 }
                 if (result)
                 {
-                    GameManager.instance.ProcessBarCreate(stackList[stackList.Count-1], idea.requireTime);
+                   GameManager.instance.ProcessBarCreateWithProduct(stackList[stackList.Count-1], GameManager.instance.ideasObj[i] ,idea.requireTime, stackList);
                 }
             }
         }

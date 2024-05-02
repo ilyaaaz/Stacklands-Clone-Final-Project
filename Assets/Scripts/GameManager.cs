@@ -18,6 +18,7 @@ public class GameManager : MonoBehaviour
 
     public GameObject currentCard;
 
+    public List<GameObject> ideasObj;
     public List<GameCard> ideas;
     void Start()
     {
@@ -29,6 +30,10 @@ public class GameManager : MonoBehaviour
         instance = this;
         currentState = STATE.Normal;
         currentCard = null;
+        for (int i = 0; i < ideasObj.Count; i++)
+        {
+            ideas.Add(ideasObj[i].GetComponent<GameCard>());
+        }
     }
 
     public enum STATE { 
@@ -182,6 +187,20 @@ public class GameManager : MonoBehaviour
         newBar.transform.SetParent(bot.transform);
         newBar.GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
         newBar.GetComponent<Process>().totalTime = time;
+    }
+
+    public void ProcessBarCreateWithProduct(GameObject bot, GameObject product, float time, List<GameObject> stack)
+    {
+        GameObject newBar = Instantiate(processBar);
+        newBar.transform.SetParent(bot.transform);
+        newBar.GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
+        Process barProcess = newBar.GetComponent<Process>();
+        barProcess.totalTime = time;
+        barProcess.product = product;
+        for (int i = 0; i < stack.Count; i++)
+        {
+            barProcess.deleteList.Add(stack[i]);
+        }
     }
 }
     
