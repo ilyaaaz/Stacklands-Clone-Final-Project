@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: -3272471435104009678}
   - component: {fileID: 512073882065858050}
   - component: {fileID: 7797088820179993835}
-  m_Layer: 10
+  m_Layer: 6
   m_Name: Berry_Bush
   m_TagString: Structure
   m_Icon: {fileID: 0}

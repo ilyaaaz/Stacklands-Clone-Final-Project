@@ -3585,9 +3585,10 @@ MonoBehaviour:
   topEdgeCollider: {fileID: 1958994195}
   bottomEdgeCollider: {fileID: 167835547}
   currentCard: {fileID: 0}
-  ideas:
+  ideasObj:
   - {fileID: 4593602674261185754, guid: 31c967051ed7a874d9b886d4c5d51e81, type: 3}
   - {fileID: 4593602674261185754, guid: 9e984479c041b6643a1b298002ff268e, type: 3}
+  ideas: []
 --- !u!4 &1370502832
 Transform:
   m_ObjectHideFlags: 0

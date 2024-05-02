@@ -9,6 +9,8 @@ public class Process : MonoBehaviour
     Product resource;
     [HideInInspector] public float totalTime = 10f;
     float currentTime, timer, speed;
+    [HideInInspector] public GameObject product;
+    [HideInInspector] public List<GameObject> deleteList;
 
     // Start is called before the first frame update
     void Start()
@@ -42,10 +44,30 @@ public class Process : MonoBehaviour
         if (currentTime >= totalTime)
         {
             currentTime = 0f;
-            if (resource.times > 0)
+            if (resource != null)
             {
-                resource.createMaterial();
+                if (resource.times > 0)
+                {
+                    resource.createMaterial();
+                }
+            } else
+            {
+                if (product != null)
+                {
+                    createMaterial(product);
+                }
             }
+            
         }
     }
+    void createMaterial(GameObject product)
+    {
+        GameObject newCard = Instantiate(product, transform.parent.position, Quaternion.identity);
+        newCard.GetComponent<GameCard>().startPos = transform.parent.position + Vector3.up * 2f;
+        for (int i = 0; i < deleteList.Count; i++)
+        {
+            Destroy(deleteList[i]);
+        }
+    }
+
 }

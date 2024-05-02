@@ -27,7 +27,7 @@ public class GameCard : MonoBehaviour
     [Header("Idea Product")]
     public List<GameObject> materials = new List<GameObject>();
     public List<int> matchingNum = new List<int>();
-    public int materialSize;
+    public int materialSize = 0;
     public float requireTime;
 
     Vector3 offSet;
@@ -59,7 +59,7 @@ public class GameCard : MonoBehaviour
         parent = null;
         child = null;
         //isColliding = false;
-        //cld.enabled = false;
+        cld.enabled = false;
         //cld.isTrigger = true;
         StartCoroutine(lerpCard(gameObject, startPos));
         ItemsUpdate();
@@ -67,7 +67,6 @@ public class GameCard : MonoBehaviour
 
     private void Update()
     {
-        //StateUpdate();
         if (GameManager.instance.currentCard == gameObject)
         {
             simulated = true;
@@ -76,11 +75,6 @@ public class GameCard : MonoBehaviour
             simulated = false;
         }
         ChildFollow();
-        //if (Input.GetMouseButtonUp(0))
-        //{
-        //    Collider2D[] colliders = Physics2D.OverlapCollider(GetComponent<Collider2D>(),);
-        //}
-        //ReachTargetPos();
         if (child == null && parent == null)
         {
             isStack = false;
@@ -102,23 +96,6 @@ public class GameCard : MonoBehaviour
         }
     }
 
-    /*
-    void StateUpdate()
-    {
-        if (currentState == STATE.NoCard)
-        {
-            
-        }
-        else if (currentState == STATE.CardDrag)
-        {
-            
-        }
-        else if (currentState == STATE.CardRelease)
-        {
-            
-        }
-    }
-    */
     void ItemsUpdate()
     {
         if (CompareTag("Coin"))
@@ -219,34 +196,7 @@ public class GameCard : MonoBehaviour
         mouseUp = true;
         mouseHold = false;
         SortLayer();
-
-        /*
-        if (currentState == STATE.CardDrag && GameManager.instance.currentCard == gameObject && isColliding)
-        {
-            currentState = STATE.CardRelease;
-            GameManager.instance.currentCard = null;
-        } else
-        {
-            currentState = STATE.NoCard;
-        }
-        */
-
     }
-    /*
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.gameObject == child)
-        {
-            if (transform.childCount > 0)
-            {
-                Destroy(transform.GetChild(0).gameObject);
-            }
-            child = null;
-            childCard = null;
-            isStack = false;
-        }
-    }
-    */
     void ChildFollow()
     {
         if (parent != null)
@@ -289,7 +239,7 @@ public class GameCard : MonoBehaviour
         {
             yield return new WaitForSeconds(0.01f);
             card.transform.position = Vector3.Lerp(card.transform.position, targetPos, 0.1f);
-            cld.enabled = false;
+            //cld.enabled = false;
         }
         if (Vector3.Distance(card.transform.position, targetPos) <= 0.01f)
         {
