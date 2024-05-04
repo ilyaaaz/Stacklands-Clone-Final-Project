@@ -40,6 +40,7 @@ public class Pack : MonoBehaviour
         if (collision.name == "Coin(Clone)")
         {
             coinNeed--;
+            SoundManager.instance.PlayBuyPack();
             Destroy(collision.gameObject);
         }
     }

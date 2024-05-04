@@ -44,6 +44,7 @@ public class Process : MonoBehaviour
         if (currentTime >= totalTime)
         {
             currentTime = 0f;
+            SoundManager.instance.PlayProduceCard();
             if (resource != null)
             {
                 if (resource.times > 0)

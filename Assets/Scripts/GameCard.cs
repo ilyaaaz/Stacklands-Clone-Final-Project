@@ -9,7 +9,6 @@ using UnityEngine.UIElements;
 
 
 public class GameCard : MonoBehaviour
-
 {
     public int value = 0; //default value
     TextMeshProUGUI titleText, detailedText, valueText;
@@ -122,6 +121,27 @@ public class GameCard : MonoBehaviour
     {
         Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         offSet = transform.position - mousePos;
+
+        if (child == null && parent == null)
+        {
+            if (gameObject.CompareTag("Villager"))
+            {
+                SoundManager.instance.PlayVillagerCard();
+            }
+            else if (gameObject.CompareTag("Coin"))
+            {
+                SoundManager.instance.PlayCoinCard();
+            }
+            else
+            {
+                SoundManager.instance.PlayCardPickUp();
+            }
+        }
+        else
+        {
+            SoundManager.instance.PlaystackCard();
+        }
+
     }
 
     private void OnMouseDrag()
@@ -194,6 +214,18 @@ public class GameCard : MonoBehaviour
     {
         //cld.isTrigger = false;
         spr.sortingOrder = 0;
+        if (gameObject.CompareTag("Villager"))
+        {
+            SoundManager.instance.PlayVillagerCard();
+        }
+        else if (gameObject.CompareTag("Coin"))
+        {
+            SoundManager.instance.PlayCoinCard();
+        }
+        else
+        {
+            SoundManager.instance.PlayCardDrop();
+        }
         mouseUp = true;
         mouseHold = false;
         SortLayer();

@@ -34,6 +34,7 @@ public class ANewWorld : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             mouseClick();
+            SoundManager.instance.PlayOpenPack();
         }
     }
     public void mouseClick()

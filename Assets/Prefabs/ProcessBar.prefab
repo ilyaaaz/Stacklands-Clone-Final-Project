@@ -121,7 +121,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 0
+  m_PresetInfoIsWorld: 1
 --- !u!114 &7723780288000745025
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -153,6 +153,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   slider: {fileID: 4844840618120407302}
   totalTime: 10
+  product: {fileID: 0}
+  deleteList: []
 --- !u!1 &2760692193864158083
 GameObject:
   m_ObjectHideFlags: 0

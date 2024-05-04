@@ -55,6 +55,7 @@ public class HumbleBeginnings : MonoBehaviour
         if (Input.GetMouseButtonUp(0))
         {
             mouseClick();
+            SoundManager.instance.PlayOpenPack();
         }
     }
     public void mouseClick()
