@@ -106,6 +106,16 @@ MonoBehaviour:
   - {fileID: 2391338999073672170, guid: ea47aa52ce6b9f341986fb043c43c3ea, type: 3}
   - {fileID: 6907902188348354159, guid: a7b1e9d4ee0c6c4438a43aa1362a0edf, type: 3}
   - {fileID: 3749499101101271603, guid: cefbb646444b51d468822f50729c551b, type: 3}
+  idea:
+  - {fileID: 4593602674261185754, guid: 90213f1d7e479ca449a2f5e4586d547d, type: 3}
+  - {fileID: 4593602674261185754, guid: ff77736c6bdb3da49a8e439eff812f20, type: 3}
+  - {fileID: 4593602674261185754, guid: 62b9fd4bcce3d62478f673047a96498c, type: 3}
+  - {fileID: 4593602674261185754, guid: 4c72a6c7e91ad3848b2a8f5756668198, type: 3}
+  percent:
+  - 0.19
+  - 0.19
+  - 0.13
+  - 0.13
 --- !u!60 &-1838860614930455235
 PolygonCollider2D:
   m_ObjectHideFlags: 0

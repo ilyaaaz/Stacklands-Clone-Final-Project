@@ -29,7 +29,7 @@ public class Villager : MonoBehaviour
     {
         if (collision.gameObject.layer == 6)
         {
-            if (GameCard.mouseUp && card.simulated)
+            if (GameCard.mouseUp && card.simulated && collision.gameObject != card.child && collision.gameObject != card.parent)
             {
                 GameManager.instance.StackCard(gameObject, collision.gameObject);
                 GameCard.mouseUp = false;

@@ -56,7 +56,7 @@ public class Food : MonoBehaviour
         
         if (collision.gameObject.layer == 6)
         {
-            if (GameCard.mouseUp && card.simulated && (collision.CompareTag("Food") || collision.CompareTag("Resource")))
+            if (GameCard.mouseUp && card.simulated && (collision.CompareTag("Food") || collision.CompareTag("Resource")) && collision.gameObject != card.child && collision.gameObject != card.parent)
             {
                 GameManager.instance.StackCard(gameObject, collision.gameObject);
                 GameCard.mouseUp = false;

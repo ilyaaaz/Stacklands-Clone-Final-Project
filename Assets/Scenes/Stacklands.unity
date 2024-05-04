@@ -1433,7 +1433,7 @@ GameObject:
   - component: {fileID: 618737761}
   - component: {fileID: 618737760}
   m_Layer: 5
-  m_Name: Details
+  m_Name: Idea Details
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3576,6 +3576,7 @@ MonoBehaviour:
   foodText: {fileID: 325238712}
   storageText: {fileID: 2036225980}
   coinsText: {fileID: 651864736}
+  ideaText: {fileID: 618737760}
   processBar: {fileID: 2688300055439361833, guid: 04fb44fe7732ec14fb4c95fbc32d1774, type: 3}
   people: []
   cardNum: 0
@@ -3589,6 +3590,7 @@ MonoBehaviour:
   - {fileID: 4593602674261185754, guid: 31c967051ed7a874d9b886d4c5d51e81, type: 3}
   - {fileID: 4593602674261185754, guid: 9e984479c041b6643a1b298002ff268e, type: 3}
   ideas: []
+  ideasFound: []
 --- !u!4 &1370502832
 Transform:
   m_ObjectHideFlags: 0
@@ -3867,7 +3869,7 @@ RectTransform:
   m_GameObject: {fileID: 1500082919}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.8293449, y: 1.7529709, z: 1.0354}
+  m_LocalScale: {x: 1.829345, y: 1.752971, z: 1.0354}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 621903837}
