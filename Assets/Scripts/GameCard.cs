@@ -22,7 +22,7 @@ public class GameCard : MonoBehaviour
     [HideInInspector] public static bool mouseUp, mouseHold;
     [HideInInspector] public Vector3 startPos, parentOrigin;
     public GameObject child, parent;
-    [HideInInspector] public GameCard childCard, parentCard;
+    [HideInInspector] public GameCard parentCard, childCard;
 
     [Header("Idea Product")]
     public List<GameObject> materials = new List<GameObject>();
@@ -67,6 +67,7 @@ public class GameCard : MonoBehaviour
 
     private void Update()
     {
+        
         if (GameManager.instance.currentCard == gameObject)
         {
             simulated = true;
@@ -127,8 +128,8 @@ public class GameCard : MonoBehaviour
     {
         //currentState = STATE.CardDrag;
         Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        transform.position = new Vector3(mousePos.x, mousePos.y, 0);
-        //transform.position = new Vector3(mousePos.x, mousePos.y, 0) + offSet;
+        //transform.position = new Vector3(mousePos.x, mousePos.y, 0);
+        transform.position = new Vector3(mousePos.x + offSet.x, mousePos.y + offSet.y, 0);
         spr.sortingOrder = 100;
         GameManager.instance.currentCard = gameObject;
         mouseHold = true;
@@ -226,9 +227,11 @@ public class GameCard : MonoBehaviour
     void SortLayer()
     {
         GameCard tempChild = childCard;
+
         while (tempChild != null)
         {
             tempChild.spr.sortingOrder = spr.sortingOrder + 1;
+            
             tempChild = tempChild.childCard;
         }
     }

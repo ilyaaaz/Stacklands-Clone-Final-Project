@@ -16,6 +16,7 @@ TagManager:
   - Resource
   - Shop
   - Mob
+  - Idea
   layers:
   - Default
   - TransparentFX

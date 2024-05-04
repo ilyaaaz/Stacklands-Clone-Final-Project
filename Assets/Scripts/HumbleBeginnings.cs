@@ -8,8 +8,11 @@ public class HumbleBeginnings : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI titleText, detailedText;
     [SerializeField] List<GameObject> list = new List<GameObject>();
-    int cardIndex;
+    [SerializeField] List<GameObject> idea = new List<GameObject>();
+    [SerializeField] List<float> percent = new List<float>();
+    int cardIndex, count;
     float circleRadius = 2.5f;
+    int ideaIndex, replaceCount;
 
     private void Awake()
     {
@@ -20,6 +23,12 @@ public class HumbleBeginnings : MonoBehaviour
     void Start()
     {
         cardIndex = 0;
+        count = 0;
+        if (idea.Count > 0)
+        {
+            ideaIndex = Random.Range(0, idea.Count);
+            replaceCount = Random.Range(0, 3);
+        }
     }
 
     // Update is called once per frame
@@ -43,31 +52,70 @@ public class HumbleBeginnings : MonoBehaviour
     {
         titleText.text = "Humble Beginnings";
         detailedText.text = "Open this Pack to get Cards!";
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonUp(0))
         {
             mouseClick();
         }
     }
     public void mouseClick()
     {
-        if (cardIndex < list.Count)
+        cardIndex = randomIndex();
+        
+        if (count <= 2)
         {
-            GameObject newCard = Instantiate(list[cardIndex], transform.position, Quaternion.identity);
-
+            GameObject newCard;
+            if (ideaIndex >= 0 && count == replaceCount)
+            {
+                newCard = Instantiate(idea[ideaIndex], transform.position, Quaternion.identity);
+                idea.Remove(idea[ideaIndex]);
+                GameManager.instance.ideasFound.Add(newCard.name);
+                GameManager.instance.ideasFoundCheck();
+            } else
+            {
+                newCard = Instantiate(list[cardIndex], transform.position, Quaternion.identity);
+            }
+        
             Vector3 circleCenter = transform.position;
 
-            float angle = cardIndex * Mathf.PI * 2f / list.Count;
+            float angle = count * Mathf.PI * 2f / 3;
             float x = circleCenter.x + circleRadius * Mathf.Cos(angle);
             float y = circleCenter.y + circleRadius * Mathf.Sin(angle);
             Vector3 objectPosition = new Vector3(x, y, 0f);
-            cardIndex++;
             newCard.GetComponent<GameCard>().startPos = objectPosition;
-            if (cardIndex == list.Count)
+            count++;
+            if (count == 3)
             {
                 titleText.text = "";
                 detailedText.text = "";
                 Destroy(gameObject);
             }
         }
+    }
+    int randomIndex()
+    {
+        int result = 0;
+        // Create cumulative distribution array
+        float[] cumulative = new float[percent.Count];
+        float total = 0;
+
+        for (int i = 0; i < percent.Count; i++)
+        {
+            total += percent[i];
+            cumulative[i] = total;
+        }
+
+        // Generate random number between 0 and total of all percentages
+        float randomPoint = Random.Range(0, total);
+
+        // Determine which card corresponds to randomPoint
+        for (int i = 0; i < cumulative.Length; i++)
+        {
+            if (randomPoint <= cumulative[i])
+            {
+                result = i; 
+                break;
+            }
+        }
+        return result;
     }
 }

@@ -9,12 +9,14 @@ public class HideMenu : MonoBehaviour
     bool closed;
     float hide_posX;
     RectTransform myRT;
+    RectTransform HideButton;
     // Start is called before the first frame update
     void Start()
     {
         closed = false;
         hide_posX = -440f;
         myRT = GetComponent<RectTransform>();
+        HideButton = GameObject.Find("Hide Button").GetComponent<RectTransform>();
     }
 
     // Update is called once per frame
@@ -28,10 +30,12 @@ public class HideMenu : MonoBehaviour
         if (!closed)
         {
             myRT.anchoredPosition = new Vector2(hide_posX, 0);
+            HideButton.localScale = new Vector3(-HideButton.localScale.x, HideButton.localScale.y, HideButton.localScale.z);
             closed = true;
         } else
         {
             myRT.anchoredPosition = Vector2.zero;
+            HideButton.localScale = new Vector3(-HideButton.localScale.x, HideButton.localScale.y, HideButton.localScale.z);
             closed = false;
         }
     }

@@ -7,7 +7,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
     public STATE currentState;
-    [SerializeField] TextMeshProUGUI titleText, detailedText, foodText, storageText, coinsText;
+    [SerializeField] TextMeshProUGUI titleText, detailedText, foodText, storageText, coinsText, ideaText;
     public GameObject processBar;
     public List<GameObject> people;
     public int cardNum, coinNum;
@@ -20,6 +20,8 @@ public class GameManager : MonoBehaviour
 
     public List<GameObject> ideasObj;
     public List<GameCard> ideas;
+
+    [HideInInspector]public List<string> ideasFound;
     void Start()
     {
         people = new List<GameObject>();
@@ -157,10 +159,17 @@ public class GameManager : MonoBehaviour
         top.GetComponent<SpriteRenderer>().sortingOrder = bot.GetComponent<SpriteRenderer>().sortingOrder + 1;
         topCard.isStack = true;
         botCard.isStack = true;
-        botCard.child = top;
-        botCard.childCard = top.GetComponent<GameCard>();
-        topCard.parent = bot;
-        topCard.parentCard = botCard.GetComponent<GameCard>();
+        if (botCard.child == null && botCard.parent != top)
+        {
+            botCard.child = top;
+            botCard.childCard = top.GetComponent<GameCard>();
+        }
+
+        if (topCard.parent == null && topCard.child != bot)
+        {
+            topCard.parent = bot;
+            topCard.parentCard = botCard.GetComponent<GameCard>();
+        }
         currentCard = null;
     }
     
@@ -201,6 +210,16 @@ public class GameManager : MonoBehaviour
         {
             barProcess.deleteList.Add(stack[i]);
         }
+    }
+
+    public void ideasFoundCheck()
+    {
+        string sentence = "";
+        for (int i = 0; i < ideasFound.Count; i++)
+        {
+            sentence += "*" + ideasFound[i] + "\n";
+        }
+        ideaText.text = sentence;
     }
 }
     
