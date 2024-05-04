@@ -91,53 +91,80 @@ public class Villager : MonoBehaviour
 
     void InitiateCombat(Transform mob)
     {
-        // Calculate the midpoint and offset for combat positioning
+        //calculate the midpoint and offset for combat positioning
         float spaceBetween = 2.5f;
         Vector3 midPoint = (this.transform.position + mob.position) / 2;
-
-        // Stop the villager's movement and any other scripts that shouldn't run during combat
-        this.enabled = false; // Assuming the villager has a movement controller that should be disabled
-
-        // Position the mob and villager for combat
+        this.enabled = false; 
+        GameCard card = GetComponent<GameCard>();
+        if (card != null)
+        {
+            card.parent = null;
+            card.child = null;
+            if (card.parentCard != null)
+            {
+                card.parentCard.child = null;
+                card.parentCard.childCard = null;
+                card.parentCard = null;
+            }
+            if (card.childCard != null)
+            {
+                card.childCard.parent = null;
+                card.childCard.parentCard = null;
+                card.childCard = null;
+            }
+        }
+        
         mob.position = new Vector3(midPoint.x, midPoint.y + spaceBetween / 2, 0); // Mob above
         this.transform.position = new Vector3(midPoint.x, midPoint.y - spaceBetween / 2, 0); // Villager below
 
-        // Optionally start combat coroutine if the villager can fight back
         StartCoroutine(Combat(mob.gameObject));
     }
+
 
     IEnumerator Combat(GameObject mob)
     {
         Health villagerHealth = GetComponent<Health>();
         Health mobHealth = mob.GetComponent<Health>();
+        Vector3 originalVillagerPosition = this.transform.position; 
+        Vector3 originalMobPosition = mob.transform.position;  
 
         while (villagerHealth.currentHealth > 0 && mobHealth.currentHealth > 0)
         {
-            // Villager's turn
+            //villager's turn
             AttackAnimation(this.transform);
             mobHealth.TakeDamage(1);
             yield return new WaitForSeconds(1.0f);
 
-            // Mob's turn
+            //reset positions to ensure they haven't drifted
+            this.transform.position = originalVillagerPosition;
+            mob.transform.position = originalMobPosition;
+
+            //mob's turn
             if (mobHealth.currentHealth > 0)
             {
                 AttackAnimation(mob.transform);
                 villagerHealth.TakeDamage(1);
                 yield return new WaitForSeconds(1.0f);
+
+                //reset positions again
+                this.transform.position = originalVillagerPosition;
+                mob.transform.position = originalMobPosition;
             }
         }
     }
 
+
     void AttackAnimation(Transform combatant)
     {
-        float originalY = combatant.position.y;
-        combatant.position = new Vector3(combatant.position.x, originalY + 0.1f, combatant.position.z);
-        StartCoroutine(ResetPosition(combatant, originalY));
+        Vector3 originalPosition = combatant.position;  //full original position
+        combatant.position = new Vector3(combatant.position.x, combatant.position.y + 0.1f, combatant.position.z);  // Move up a little
+        StartCoroutine(ResetPosition(combatant, originalPosition));  //reset to the original position
     }
 
-    IEnumerator ResetPosition(Transform combatant, float originalY)
+    IEnumerator ResetPosition(Transform combatant, Vector3 originalPosition)
     {
-        yield return new WaitForSeconds(0.5f);
-        combatant.position = new Vector3(combatant.position.x, originalY, combatant.position.z);
+        yield return new WaitForSeconds(0.5f);  //wait
+        combatant.position = originalPosition;  //reset position
     }
+
 }

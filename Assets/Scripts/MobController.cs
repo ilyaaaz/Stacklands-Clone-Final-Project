@@ -47,20 +47,34 @@ public class MobController : MonoBehaviour
 
     void MoveTowardsTarget()
     {
-        transform.position = Vector3.MoveTowards(transform.position, target.position, moveSpeed * Time.deltaTime);
+        float step = moveSpeed * Time.deltaTime;
+        transform.position = Vector3.Lerp(transform.position, target.position, step / Vector3.Distance(transform.position, target.position));
     }
 
     void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Villager"))
         {
-            //position
-            PositionForCombat(collision.gameObject.transform);
+            //calculate the positions for combat 
+            Vector3 midPoint = (transform.position + collision.transform.position) / 2;
+            float spaceBetween = 2.5f; 
+            Vector3 mobPosition = new Vector3(midPoint.x, midPoint.y + spaceBetween / 2, 0); // Mob above
+            Vector3 villagerPosition = new Vector3(midPoint.x, midPoint.y - spaceBetween / 2, 0); // Villager below
 
-            //combat
-            StartCoroutine(Combat(collision.gameObject));
+            //stop both movement and start combat
+            this.enabled = false;
+            if (collision.gameObject.GetComponent<MobController>())
+            {
+                collision.gameObject.GetComponent<MobController>().enabled = false;
+            }
+
+            this.transform.position = mobPosition;  //update this mob's pos
+            collision.transform.position = villagerPosition;  //update colliding villager's pos
+
+            StartCoroutine(Combat(collision.gameObject, mobPosition, villagerPosition)); //new positions
         }
     }
+
 
     void PositionForCombat(Transform villager)
     {
@@ -72,47 +86,72 @@ public class MobController : MonoBehaviour
         }
 
         //calculate new positions
-        float spaceBetween = 2.5f; 
-        Vector3 midPoint = (this.transform.position + villager.position) / 2; //midpoint between the two
-        this.transform.position = new Vector3(midPoint.x, midPoint.y + spaceBetween / 2, 0); //mob above
-        villager.position = new Vector3(midPoint.x, midPoint.y - spaceBetween / 2, 0); //villager below
+        float spaceBetween = 2.5f;
+        Vector3 midPoint = (this.transform.position + villager.position) / 2;
+        Vector3 mobPosition = new Vector3(midPoint.x, midPoint.y + spaceBetween / 2, 0); //mob above
+        Vector3 villagerPosition = new Vector3(midPoint.x, midPoint.y - spaceBetween / 2, 0); //villager below
+        this.transform.position = mobPosition;
+        villager.position = villagerPosition;
+
+        //start combat
+        StartCoroutine(Combat(villager.gameObject, mobPosition, villagerPosition));
     }
 
 
-
-    IEnumerator Combat(GameObject villager)
+    IEnumerator Combat(GameObject villager, Vector3 mobPosition, Vector3 villagerPosition)
     {
         Health mobHealth = GetComponent<Health>();
         Health villagerHealth = villager.GetComponent<Health>();
+        Transform villagerTransform = villager.transform;  // We need this for directional attacks
 
         while (mobHealth.currentHealth > 0 && villagerHealth.currentHealth > 0)
         {
-            //mob's turn
-            AttackAnimation(this.transform);  //visual indication of attack
+            //mob attacks villager
+            AttackAnimation(this.transform, mobPosition, villagerTransform);
             villagerHealth.TakeDamage(1);
             yield return new WaitForSeconds(1.0f);
 
-            //villager's turn
+            //villager attacks mob
             if (villagerHealth.currentHealth > 0)
             {
-                AttackAnimation(villager.transform);  //visual indication of attack
+                AttackAnimation(villagerTransform, villagerPosition, this.transform);
                 mobHealth.TakeDamage(1);
                 yield return new WaitForSeconds(1.0f);
             }
         }
     }
 
-    void AttackAnimation(Transform combatant)
+
+    void AttackAnimation(Transform combatant, Vector3 combatPosition, Transform target)
     {
-        float originalY = combatant.position.y;
-        combatant.position = new Vector3(combatant.position.x, originalY + 0.1f, combatant.position.z); //move up a little
-        StartCoroutine(ResetPosition(combatant, originalY));
+        //point slightly in front of the target to simulate an attack landing
+        Vector3 attackPosition = combatPosition + (target.position - combatPosition) * 0.1f + new Vector3(0, 0.1f, 0);
+
+        //attack move
+        StartCoroutine(PerformAttack(combatant, combatPosition, attackPosition));
     }
 
-    IEnumerator ResetPosition(Transform combatant, float originalY)
+    IEnumerator PerformAttack(Transform combatant, Vector3 originalPosition, Vector3 attackPosition)
     {
-        yield return new WaitForSeconds(0.5f); //wait
-        combatant.position = new Vector3(combatant.position.x, originalY, combatant.position.z); //reset position
-    }
+        // Move towards the attack position
+        float attackTime = 0.1f;
+        for (float t = 0; t < 1; t += Time.deltaTime / attackTime)
+        {
+            combatant.position = Vector3.Lerp(originalPosition, attackPosition, t);
+            yield return null;
+        }
 
+        //attack position pause
+        yield return new WaitForSeconds(0.1f);
+
+        //original combat position
+        for (float t = 0; t < 1; t += Time.deltaTime / attackTime)
+        {
+            combatant.position = Vector3.Lerp(attackPosition, originalPosition, t);
+            yield return null;
+        }
+
+        //position
+        combatant.position = originalPosition;
+    }
 }
