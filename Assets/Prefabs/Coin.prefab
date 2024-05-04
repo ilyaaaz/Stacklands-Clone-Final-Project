@@ -179,8 +179,8 @@ MonoBehaviour:
   parentOrigin: {x: 0, y: 0, z: 0}
   child: {fileID: 0}
   parent: {fileID: 0}
-  childCard: {fileID: 0}
   parentCard: {fileID: 0}
+  childCard: {fileID: 0}
   materials: []
   matchingNum: 
   materialSize: 0

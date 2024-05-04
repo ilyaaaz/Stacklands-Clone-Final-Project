@@ -32,6 +32,7 @@ public class SellArea : MonoBehaviour
             GameManager.instance.coinNum += card.value;
             GameManager.instance.CoinUpdate();
 
+            SoundManager.instance.PlayCardSell();
             //destroy sold card.
             Destroy(collision.gameObject);
         } else
