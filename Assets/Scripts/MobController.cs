@@ -47,85 +47,58 @@ public class MobController : MonoBehaviour
 
     void MoveTowardsTarget()
     {
-        float step = moveSpeed * Time.deltaTime;
-        transform.position = Vector3.Lerp(transform.position, target.position, step / Vector3.Distance(transform.position, target.position));
+        //fixed interpolation factor
+        float lerpFactor = 0.2f;  //step size
+
+        //current position to target position
+        transform.position = Vector3.Lerp(transform.position, target.position, lerpFactor);
     }
 
-    void OnCollisionEnter2D(Collision2D collision)
+    void InitiateCombat(Transform villager)
     {
-        if (collision.gameObject.CompareTag("Villager"))
-        {
-            //calculate the positions for combat 
-            Vector3 midPoint = (transform.position + collision.transform.position) / 2;
-            float spaceBetween = 2.5f; 
-            Vector3 mobPosition = new Vector3(midPoint.x, midPoint.y + spaceBetween / 2, 0); // Mob above
-            Vector3 villagerPosition = new Vector3(midPoint.x, midPoint.y - spaceBetween / 2, 0); // Villager below
-
-            //stop both movement and start combat
-            this.enabled = false;
-            if (collision.gameObject.GetComponent<MobController>())
-            {
-                collision.gameObject.GetComponent<MobController>().enabled = false;
-            }
-
-            this.transform.position = mobPosition;  //update this mob's pos
-            collision.transform.position = villagerPosition;  //update colliding villager's pos
-
-            StartCoroutine(Combat(collision.gameObject, mobPosition, villagerPosition)); //new positions
-        }
-    }
-
-
-    void PositionForCombat(Transform villager)
-    {
-        //stop the mob's and villager's movement
-        this.enabled = false; //disabling the mob's script to stop further updates
-        if (villager.GetComponent<MobController>()) //check and disable the villager's movement if it has the same script
-        {
-            villager.GetComponent<MobController>().enabled = false;
-        }
-
-        //calculate new positions
         float spaceBetween = 2.5f;
         Vector3 midPoint = (this.transform.position + villager.position) / 2;
-        Vector3 mobPosition = new Vector3(midPoint.x, midPoint.y + spaceBetween / 2, 0); //mob above
-        Vector3 villagerPosition = new Vector3(midPoint.x, midPoint.y - spaceBetween / 2, 0); //villager below
-        this.transform.position = mobPosition;
-        villager.position = villagerPosition;
+        this.enabled = false;
+        GameCard card = GetComponent<GameCard>();
 
-        //start combat
-        StartCoroutine(Combat(villager.gameObject, mobPosition, villagerPosition));
+        Vector3 mobPosition = new Vector3(midPoint.x, midPoint.y + spaceBetween / 2, 0);
+        Vector3 villagerPosition = new Vector3(midPoint.x, midPoint.y - spaceBetween / 2, 0);
+        villager.position = mobPosition;
+        this.transform.position = villagerPosition;
+
+        StartCoroutine(Combat(villager.gameObject, villagerPosition, mobPosition));
     }
 
-
-    IEnumerator Combat(GameObject villager, Vector3 mobPosition, Vector3 villagerPosition)
+    IEnumerator Combat(GameObject mob, Vector3 villagerPosition, Vector3 mobPosition)
     {
-        Health mobHealth = GetComponent<Health>();
-        Health villagerHealth = villager.GetComponent<Health>();
-        Transform villagerTransform = villager.transform;  // We need this for directional attacks
+        Health villagerHealth = GetComponent<Health>();
+        Health mobHealth = mob.GetComponent<Health>();
 
-        while (mobHealth.currentHealth > 0 && villagerHealth.currentHealth > 0)
+        while (villagerHealth.currentHealth > 0 && mobHealth.currentHealth > 0)
         {
-            //mob attacks villager
-            AttackAnimation(this.transform, mobPosition, villagerTransform);
-            villagerHealth.TakeDamage(1);
+            AttackAnimation(this.transform, villagerPosition, mob.transform);
+            mobHealth.TakeDamage(1);
             yield return new WaitForSeconds(1.0f);
 
-            //villager attacks mob
-            if (villagerHealth.currentHealth > 0)
+            this.transform.position = villagerPosition;  //reset villager pos
+            mob.transform.position = mobPosition;        //reset mob pos
+
+            if (mobHealth.currentHealth > 0)
             {
-                AttackAnimation(villagerTransform, villagerPosition, this.transform);
-                mobHealth.TakeDamage(1);
+                AttackAnimation(mob.transform, mobPosition, this.transform);
+                villagerHealth.TakeDamage(1);
                 yield return new WaitForSeconds(1.0f);
+
+                this.transform.position = villagerPosition;  //reset villager pos
+                mob.transform.position = mobPosition;        //reset mob pos
             }
         }
     }
-
 
     void AttackAnimation(Transform combatant, Vector3 combatPosition, Transform target)
     {
         //point slightly in front of the target to simulate an attack landing
-        Vector3 attackPosition = combatPosition + (target.position - combatPosition) * 0.1f + new Vector3(0, 0.1f, 0);
+        Vector3 attackPosition = combatPosition + (target.position - combatPosition) * 0.1f + new Vector3(0, 0.3f, 0);
 
         //attack move
         StartCoroutine(PerformAttack(combatant, combatPosition, attackPosition));
@@ -133,7 +106,7 @@ public class MobController : MonoBehaviour
 
     IEnumerator PerformAttack(Transform combatant, Vector3 originalPosition, Vector3 attackPosition)
     {
-        // Move towards the attack position
+        //attack pos
         float attackTime = 0.1f;
         for (float t = 0; t < 1; t += Time.deltaTime / attackTime)
         {
@@ -141,10 +114,10 @@ public class MobController : MonoBehaviour
             yield return null;
         }
 
-        //attack position pause
+        //attack pos pause
         yield return new WaitForSeconds(0.1f);
 
-        //original combat position
+        //original combat pos
         for (float t = 0; t < 1; t += Time.deltaTime / attackTime)
         {
             combatant.position = Vector3.Lerp(attackPosition, originalPosition, t);
@@ -153,5 +126,12 @@ public class MobController : MonoBehaviour
 
         //position
         combatant.position = originalPosition;
+    }
+
+
+    IEnumerator ResetPosition(Transform combatant, Vector3 originalPosition)
+    {
+        yield return new WaitForSeconds(0.5f);  //wait
+        combatant.position = originalPosition;  //reset position
     }
 }
