@@ -31,7 +31,6 @@ public class Moon : MonoBehaviour
         //text.text = slider.value.ToString();
         if (currentTime >= totalTime)
         {
-            moonText.text = "Moon " + GameManager.instance.moonCount;
             currentTime = 0;
             GameManager.instance.currentState = GameManager.STATE.Stop;
             SoundManager.instance.Playmoon();
@@ -46,8 +45,13 @@ public class Moon : MonoBehaviour
         }
         else
         {
-            GameManager.instance.duringFeed = false;
-            //UnFreezeCards();
+            if (GameManager.instance.duringFeed == true)
+            {
+                CancelInvoke("ButtonColorChange");
+                moonText.text = "Moon " + GameManager.instance.moonCount;
+                GameManager.instance.duringFeed = false;
+                UnFreezeCards(); 
+            }
             feedUI.SetActive(false);
             otherUI.SetActive(true);
         }
@@ -158,6 +162,7 @@ public class Moon : MonoBehaviour
 
     void UnFreezeCards()
     {
+        allObjects = FindObjectsOfType<GameObject>();
         // Iterate over each GameObject
         foreach (GameObject obj in allObjects)
         {

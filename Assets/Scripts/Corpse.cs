@@ -20,6 +20,7 @@ public class Corpse : MonoBehaviour
         {
             gameObject.AddComponent<GameCard>();
             card = GetComponent<GameCard>();
+            card.startPos = gameObject.transform.position;
             hasAdd = true;
         }
     }

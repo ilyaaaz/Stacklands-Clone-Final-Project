@@ -74,7 +74,10 @@ public class GameCard : MonoBehaviour
         {
             simulated = false;
         }
-        ChildFollow();
+        if (cld.enabled)
+        {
+            FollowParent();
+        }
         if (child == null && parent == null)
         {
             isStack = false;
@@ -230,7 +233,7 @@ public class GameCard : MonoBehaviour
         mouseHold = false;
         SortLayer();
     }
-    void ChildFollow()
+    void FollowParent()
     {
         if (parent != null)
         {

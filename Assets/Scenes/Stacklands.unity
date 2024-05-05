@@ -1830,8 +1830,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -54.299995, y: -0.9000006}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: -3.9896, y: -0.45}
+  m_SizeDelta: {x: 194.7601, y: -0.9}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &636786235
 MonoBehaviour:
@@ -1853,7 +1853,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Feed Villagers
+  m_text: Start New Moon
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: bb2f2ffd609d62c498fd268b3f799d52, type: 2}
   m_sharedMaterial: {fileID: 3046270012726377675, guid: bb2f2ffd609d62c498fd268b3f799d52, type: 2}
@@ -4089,6 +4089,7 @@ MonoBehaviour:
   feedDetailedText: {fileID: 1922911595}
   feedButtonText: {fileID: 636786235}
   corpse: {fileID: 4463371284818460278, guid: 203a3da4bf4455240b1546a7c670e1dd, type: 3}
+  otherUI: {fileID: 955602144}
   processBar: {fileID: 2688300055439361833, guid: 04fb44fe7732ec14fb4c95fbc32d1774, type: 3}
   people: []
   foods: []
@@ -4406,8 +4407,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -1004, y: -494}
-  m_SizeDelta: {x: 428.075, y: 52.7071}
+  m_AnchoredPosition: {x: -906.56604, y: -494.32}
+  m_SizeDelta: {x: 622.9429, y: 53.354}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1485146862
 MonoBehaviour:

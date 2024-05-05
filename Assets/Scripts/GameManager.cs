@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
 public class GameManager : MonoBehaviour
@@ -9,14 +10,14 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
     public STATE currentState;
     [SerializeField] TextMeshProUGUI titleText, detailedText, foodText, storageText, coinsText, ideaText, feedTitleText, feedDetailedText, feedButtonText;
-    [SerializeField] GameObject corpse;
+    [SerializeField] GameObject corpse, otherUI;
     public GameObject processBar;
     [HideInInspector] public List<GameObject> people, foods;
     public int cardNum, coinNum, foodNum;
     public float gameSpeed;
     public PolygonCollider2D leftEdgeCollider, rightEdgeCollider, topEdgeCollider, bottomEdgeCollider;
 
-    int buttonState, deathIndex; //0 feed Villager, 1 uh oh, 2 start new Moon.
+    int buttonState, deathIndex; //0 feed Villager, 1 uh oh, 2 start new Moon, 3 gameover.
 
     int maxStorage;
     RaycastHit2D hit;
@@ -73,6 +74,7 @@ public class GameManager : MonoBehaviour
     {
         if (currentState == STATE.Normal)
         {
+            otherUI.SetActive(true);
             gameSpeed = 1f;
         }
         else if (currentState == STATE.Fast)
@@ -174,6 +176,7 @@ public class GameManager : MonoBehaviour
         }
         ProcessBarCheck(bot);
         StartCoroutine(topCard.lerpCard(top, bot.transform.position + Vector3.down * 0.3f));
+        topCard.GetComponent<Collider2D>().enabled = false;
         //top.transform.position = bot.transform.position + Vector3.down * 0.3f;
         top.GetComponent<SpriteRenderer>().sortingOrder = bot.GetComponent<SpriteRenderer>().sortingOrder + 1;
         topCard.isStack = true;
@@ -254,13 +257,17 @@ public class GameManager : MonoBehaviour
         } else if (buttonState == 2)
         {
             currentState = STATE.Normal;
+        } else if (buttonState == 3)
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
     }
 
     public void FeedVillager()
     {
-        feedDetailedText.text = "Eating";
-        feedButtonText.text = "";
+        feedDetailedText.text = "";
+        feedButtonText.text = "Eating...";
+        bool everyoneFeed = true;
         //for each villager
         for (int i = 0; i < people.Count; i++)
         {
@@ -279,7 +286,6 @@ public class GameManager : MonoBehaviour
                     int foodNum = foods[j].GetComponent<Food>().foodPoint;
                     if (foodNum > 0)
                     {
-                        StartCoroutine(foods[j].GetComponent<GameCard>().lerpCard(foods[j], people[i].transform.position));
                         FoodUpdate();
                         //if food is large than 2
                         if (foodNum > 2)
@@ -302,11 +308,17 @@ public class GameManager : MonoBehaviour
                 }
                 if (eatNum < 2)
                 {
+                    everyoneFeed = false;
                     VillagerStarveText();
                     deathIndex = i;
                     break;
                 }
             }
+        }
+
+        if (everyoneFeed)
+        {
+            StartNewMoonText();
         }
     }
 
@@ -328,7 +340,13 @@ public class GameManager : MonoBehaviour
             cardNum--;
             people.RemoveAt(deathIndex);
         }
-        StartNewMoonText();
+        if (people.Count != 0)
+        {
+            StartNewMoonText();
+        } else
+        {
+            GameEnd();
+        }
     }
 
     void StartNewMoonText()
@@ -340,5 +358,11 @@ public class GameManager : MonoBehaviour
         buttonState = 2;
     }
 
+    void GameEnd()
+    {
+        feedDetailedText.text = "Everyone starved to death!";
+        feedButtonText.text = "Game Over (Restart)";
+        buttonState = 3;
+    }
 }
     
