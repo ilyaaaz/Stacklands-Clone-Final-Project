@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2473461152482476663}
   - component: {fileID: -1838860614930455235}
   - component: {fileID: -1503544080234653402}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: HumbleBeginnnings
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -106,6 +106,11 @@ MonoBehaviour:
   - {fileID: 2391338999073672170, guid: ea47aa52ce6b9f341986fb043c43c3ea, type: 3}
   - {fileID: 6907902188348354159, guid: a7b1e9d4ee0c6c4438a43aa1362a0edf, type: 3}
   - {fileID: 3749499101101271603, guid: cefbb646444b51d468822f50729c551b, type: 3}
+  - {fileID: 3749499101101271603, guid: 55b5e57cb137c4048becaddc0b72728e, type: 3}
+  - {fileID: 3749499101101271603, guid: 2517ac2ca4a9ca54d873a39ce90be35b, type: 3}
+  - {fileID: 131287027661842051, guid: 21ad91e1c6a4eff40bf5f122d337c34e, type: 3}
+  - {fileID: 4463371284818460278, guid: aa7ee6a01cf8b5e418c5da8a6412f8d8, type: 3}
+  - {fileID: 4463371284818460278, guid: f131e8014fb9d414ab1f72b44e299f63, type: 3}
   idea:
   - {fileID: 4593602674261185754, guid: 90213f1d7e479ca449a2f5e4586d547d, type: 3}
   - {fileID: 4593602674261185754, guid: ff77736c6bdb3da49a8e439eff812f20, type: 3}
@@ -116,6 +121,11 @@ MonoBehaviour:
   - 0.19
   - 0.13
   - 0.13
+  - 0.13
+  - 0.13
+  - 0.03
+  - 0.03
+  - 0.03
 --- !u!60 &-1838860614930455235
 PolygonCollider2D:
   m_ObjectHideFlags: 0

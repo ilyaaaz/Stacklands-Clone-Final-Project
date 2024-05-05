@@ -37,11 +37,12 @@ public class Pack : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.name == "Coin(Clone)")
+        if (collision.CompareTag("Coin"))
         {
             coinNeed--;
             SoundManager.instance.PlayBuyPack();
             Destroy(collision.gameObject);
+            GameManager.instance.coinNum--;
         }
     }
 }

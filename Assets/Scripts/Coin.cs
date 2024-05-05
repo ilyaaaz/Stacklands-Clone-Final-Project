@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Structure : MonoBehaviour
+public class Coin : MonoBehaviour
 {
     GameCard card;
     // Start is called before the first frame update
@@ -14,7 +14,7 @@ public class Structure : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //print("structure " + gameObject.name + " " +  card.currentState.ToString());
+        
     }
 
     private void OnTriggerExit2D(Collider2D collision)
@@ -39,11 +39,10 @@ public class Structure : MonoBehaviour
             }
             else if (card.currentState == GameCard.STATE.CardRelease)
             {
-                //only same name could stack
-                if (collision.name == gameObject.name)
+                if (collision.CompareTag("Resource") || collision.CompareTag("Villager"))
                 {
                     GameManager.instance.StackCard(gameObject, collision.gameObject);
-                   
+                    card.currentState = GameCard.STATE.NoCard;
                 } else
                 {
                     if (!card.isStack)
@@ -51,14 +50,13 @@ public class Structure : MonoBehaviour
                         GameManager.instance.SeparateCard(gameObject, collision.gameObject);
                     }
                 }
-                card.currentState = GameCard.STATE.NoCard;
             }
         }
         */
         
         if (collision.gameObject.layer == 6)
         {
-            if (GameCard.mouseUp && (collision.name == gameObject.name || collision.CompareTag("Resource") || collision.CompareTag("Coin")) && card.simulated && collision.gameObject != card.child && collision.gameObject != card.parent)
+            if (GameCard.mouseUp && card.simulated && (collision.CompareTag("Resource") || collision.CompareTag("Villager") || collision.CompareTag("Coin")) && collision.gameObject != card.child && collision.gameObject != card.parent)
             {
                 GameManager.instance.StackCard(gameObject, collision.gameObject);
                 GameCard.mouseUp = false;
@@ -73,4 +71,15 @@ public class Structure : MonoBehaviour
         }
         
     }
+
+    /*
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        //if same
+        if (collision.name == name && !card.isStack)
+        {
+            GameManager.instance.StackCard(gameObject, collision.gameObject);
+        }
+    }
+    */
 }

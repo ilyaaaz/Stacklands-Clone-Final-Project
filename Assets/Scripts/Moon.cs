@@ -8,14 +8,18 @@ using UnityEngine.UI;
 public class Moon : MonoBehaviour
 {
     [SerializeField] Slider slider;
-    [SerializeField] TextMeshProUGUI moonText, titleText, detailedText;
+    [SerializeField] TextMeshProUGUI moonText, titleText, detailedText, feedTitleText, feedDetailedText, feedButtonText, buttonText;
+    [SerializeField] Button botton;
     [SerializeField] Sprite normalImage, stopImage, fastImage;
     [SerializeField] Image stateImage;
     float totalTime, currentTime, timer, speed;
+    [SerializeField] GameObject feedUI, otherUI;
+    GameObject[] allObjects;
 
     // Start is called before the first frame update
     void Start()
     {
+        
         totalTime = 120f;
         currentTime = 0f;
     }
@@ -28,18 +32,49 @@ public class Moon : MonoBehaviour
         //text.text = slider.value.ToString();
         if (currentTime >= totalTime)
         {
+            moonText.text = "Moon " + GameManager.instance.moonCount;
             currentTime = 0;
             GameManager.instance.currentState = GameManager.STATE.Stop;
+            SoundManager.instance.Playmoon();
+            GameManager.instance.duringFeed = true;
+            FreezeCards();
+            feedTitleText.text = "End Of Moon " + GameManager.instance.moonCount;
+            feedDetailedText.text = "Time to eat";
+            feedButtonText.text = "Feed Villagers";
+            InvokeRepeating("ButtonColorChange", 0, 0.3f);
+            feedUI.SetActive(true);
+            otherUI.SetActive(false);
+        }
+        else
+        {
+            GameManager.instance.duringFeed = false;
+            UnFreezeCards();
+            feedUI.SetActive(false);
+            otherUI.SetActive(true);
         }
     }
-    
+
+    void ButtonColorChange()
+    {
+        Color white = new Color(1, 0.9764706f, 0.8901961f);
+        Color yellow = new Color(1, 0.9607844f, 0.8117648f);
+        if (botton.image.color == white)
+        {
+            botton.image.color = yellow;
+        }
+        else
+        {
+            botton.image.color = white;
+        }
+    }
+
     //change slideBar
     void SlideBar()
     {
         timer += Time.deltaTime;
         if (timer >= 0.1f)
         {
-            currentTime += speed;
+            currentTime += speed * GameManager.instance.gameSpeed;
             timer = 0f;
         }
 
@@ -74,6 +109,16 @@ public class Moon : MonoBehaviour
         detailedText.text = "The current time. There's " + (totalTime - currentTime).ToString("0.0") + "s left in this moon. \n \n" + "Use [Space] to pause or use [Tab] to toggle between game speeds" ; 
     }
 
+    public void ChangeButtonFont()
+    {
+        buttonText.fontStyle = FontStyles.Bold | FontStyles.Underline;
+    }
+
+    public void ChangeButtonBack()
+    {
+        buttonText.fontStyle = FontStyles.Bold;
+    }
+
     public void ChangeBack()
     {
         moonText.fontStyle = FontStyles.Bold;
@@ -95,6 +140,32 @@ public class Moon : MonoBehaviour
         else if (GameManager.instance.currentState == GameManager.STATE.Stop)
         {
             GameManager.instance.currentState = GameManager.STATE.Normal;
+        }
+    }
+
+    void FreezeCards()
+    {
+        allObjects = FindObjectsOfType<GameObject>();
+
+        // Iterate over each GameObject
+        foreach (GameObject obj in allObjects)
+        {
+            if (obj.layer == 6)
+            {
+                obj.GetComponent<Collider2D>().enabled = false;
+            }
+        }
+    }
+
+    void UnFreezeCards()
+    {
+        // Iterate over each GameObject
+        foreach (GameObject obj in allObjects)
+        {
+            if (obj.layer == 6)
+            {
+                obj.GetComponent<Collider2D>().enabled = true;
+            }
         }
     }
 }

@@ -17,6 +17,7 @@ public class Product : MonoBehaviour
     {
         if (times == 0)
         {
+            GameManager.instance.cardNum--;
             Destroy(gameObject);
         }
     }

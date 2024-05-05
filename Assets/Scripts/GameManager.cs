@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -7,13 +8,17 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
     public STATE currentState;
-    [SerializeField] TextMeshProUGUI titleText, detailedText, foodText, storageText, coinsText, ideaText;
+    [SerializeField] TextMeshProUGUI titleText, detailedText, foodText, storageText, coinsText, ideaText, feedTitleText, feedDetailedText, feedButtonText;
+    [SerializeField] GameObject corpse;
     public GameObject processBar;
-    public List<GameObject> people;
-    public int cardNum, coinNum;
+    [HideInInspector] public List<GameObject> people, foods;
+    public int cardNum, coinNum, foodNum;
+    public float gameSpeed;
     public PolygonCollider2D leftEdgeCollider, rightEdgeCollider, topEdgeCollider, bottomEdgeCollider;
 
-    int foodNum, maxStorage;
+    int buttonState, deathIndex; //0 feed Villager, 1 uh oh, 2 start new Moon.
+
+    int maxStorage;
     RaycastHit2D hit;
 
     public GameObject currentCard;
@@ -21,9 +26,16 @@ public class GameManager : MonoBehaviour
     public List<GameObject> ideasObj;
     public List<GameCard> ideas;
 
-    [HideInInspector]public List<string> ideasFound;
+    [HideInInspector] public int moonCount;
+
+    [HideInInspector] public List<string> ideasFound;
+
+    [HideInInspector] public bool duringFeed;
     void Start()
     {
+        duringFeed = false;
+        moonCount = 1;
+        buttonState = 0;
         people = new List<GameObject>();
         coinNum = 0;
         foodNum = 0;
@@ -38,10 +50,11 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public enum STATE { 
+    public enum STATE
+    {
         Normal,
         Stop,
-        Fast
+        Fast,
     }
 
     // Update is called once per frame
@@ -49,27 +62,26 @@ public class GameManager : MonoBehaviour
     {
         //print(currentCard);
         StateUpdate();
-        //MouseCheck();
-        //FoodUpdate();
+        //StorageUpdate();
         if (currentCard != null)
         {
             currentCard.transform.position = GetClampedPosition(currentCard.transform.position);
         }
-    }  
+    }
 
     void StateUpdate()
     {
         if (currentState == STATE.Normal)
         {
-
+            gameSpeed = 1f;
         }
         else if (currentState == STATE.Fast)
         {
-
+            gameSpeed = 2f;
         }
         else if (currentState == STATE.Stop)
         {
-
+            gameSpeed = 0;
         }
 
         if (Input.GetKeyDown(KeyCode.Space))
@@ -89,7 +101,8 @@ public class GameManager : MonoBehaviour
             if (currentState == STATE.Normal)
             {
                 currentState = STATE.Fast;
-            } else
+            }
+            else
             {
                 currentState = STATE.Normal;
             }
@@ -113,9 +126,14 @@ public class GameManager : MonoBehaviour
     public void FoodUpdate()
     {
         foodText.text = foodNum + "/" + people.Count * 2;
-        if (foodNum < people.Count*2)
+        if (foodNum < people.Count * 2)
         {
             InvokeRepeating("FoodTextColorChange", 0, 0.5f);
+        }
+        else
+        {
+            CancelInvoke("FoodTextColorChange");
+            foodText.color = Color.black;
         }
     }
 
@@ -125,7 +143,8 @@ public class GameManager : MonoBehaviour
         if (foodText.color == Color.black)
         {
             foodText.color = Color.red;
-        } else
+        }
+        else
         {
             foodText.color = Color.black;
         }
@@ -172,7 +191,7 @@ public class GameManager : MonoBehaviour
         }
         currentCard = null;
     }
-    
+
     //separate card
     public void SeparateCard(GameObject top, GameObject bot)
     {
@@ -183,7 +202,8 @@ public class GameManager : MonoBehaviour
         currentCard = null;
     }
 
-    void ProcessBarCheck (GameObject bot) {
+    void ProcessBarCheck(GameObject bot)
+    {
         if (bot.CompareTag("Structure"))
         {
             ProcessBarCreate(bot, 10f);
@@ -221,5 +241,104 @@ public class GameManager : MonoBehaviour
         }
         ideaText.text = sentence;
     }
+
+    public void moonButtonClick()
+    {
+        if (buttonState == 0)
+        {
+            FeedVillager();
+        }
+        else if (buttonState == 1)
+        {
+            VillagerStarve();
+        } else if (buttonState == 2)
+        {
+            currentState = STATE.Normal;
+        }
+    }
+
+    public void FeedVillager()
+    {
+        feedDetailedText.text = "Eating";
+        feedButtonText.text = "";
+        //for each villager
+        for (int i = 0; i < people.Count; i++)
+        {
+            int eatNum = 0;
+            //if no food left
+            if (foods.Count == 0)
+            {
+                VillagerStarveText();
+                deathIndex = i;
+                break;
+            }
+            else
+            {
+                for (int j = 0; j < foods.Count; j++)
+                {
+                    int foodNum = foods[j].GetComponent<Food>().foodPoint;
+                    if (foodNum > 0)
+                    {
+                        StartCoroutine(foods[j].GetComponent<GameCard>().lerpCard(foods[j], people[i].transform.position));
+                        FoodUpdate();
+                        //if food is large than 2
+                        if (foodNum > 2)
+                        {
+                            foods[j].GetComponent<Food>().foodPoint -= 2;
+                            break;
+                        }
+                        //if food is less or equal to 2
+                        if (foodNum <= 2)
+                        {
+                            Destroy(foods[j]);
+                            cardNum--;
+                            eatNum += foodNum;
+                            if (eatNum == 2)
+                            {
+                                break;
+                            }
+                        }
+                    }
+                }
+                if (eatNum < 2)
+                {
+                    VillagerStarveText();
+                    deathIndex = i;
+                    break;
+                }
+            }
+        }
+    }
+
+    void VillagerStarveText()
+    {
+        feedDetailedText.text = "There is not enough Food.. " + (people.Count - deathIndex) + " Villager will starve of Hunger";
+        feedButtonText.text = "Uh oh";
+        buttonState = 1;
+    }
+
+    void VillagerStarve()
+    {
+        
+        while (deathIndex != people.Count)
+        {
+            GameObject deadBody = Instantiate(corpse);
+            deadBody.transform.position = people[deathIndex].transform.position;
+            Destroy(people[deathIndex]);
+            cardNum--;
+            people.RemoveAt(deathIndex);
+        }
+        StartNewMoonText();
+    }
+
+    void StartNewMoonText()
+    {
+        moonCount++;
+        feedTitleText.text = "START OF MOON " + moonCount;
+        feedDetailedText.text = "";
+        feedButtonText.text = "Start New Moon";
+        buttonState = 2;
+    }
+
 }
     

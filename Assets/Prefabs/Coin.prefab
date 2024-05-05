@@ -13,10 +13,10 @@ GameObject:
   - component: {fileID: -2967061731093689946}
   - component: {fileID: -6823363076463094126}
   - component: {fileID: -7780700336106281635}
-  - component: {fileID: 1048599095040808769}
+  - component: {fileID: 973850859872326764}
   m_Layer: 6
   m_Name: Coin
-  m_TagString: Resource
+  m_TagString: Coin
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -185,7 +185,7 @@ MonoBehaviour:
   matchingNum: 
   materialSize: 0
   requireTime: 0
---- !u!114 &1048599095040808769
+--- !u!114 &973850859872326764
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -194,6 +194,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 131287027661842051}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5dd8f8830e8296449a29167dc5741df9, type: 3}
+  m_Script: {fileID: 11500000, guid: 79e601a9d66d773488016cfefeaaac18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
