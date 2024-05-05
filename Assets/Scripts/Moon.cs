@@ -19,7 +19,6 @@ public class Moon : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
         totalTime = 120f;
         currentTime = 0f;
     }
@@ -48,7 +47,7 @@ public class Moon : MonoBehaviour
         else
         {
             GameManager.instance.duringFeed = false;
-            UnFreezeCards();
+            //UnFreezeCards();
             feedUI.SetActive(false);
             otherUI.SetActive(true);
         }

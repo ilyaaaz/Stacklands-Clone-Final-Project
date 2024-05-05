@@ -8,6 +8,7 @@ public class Villager : MonoBehaviour
     GameCard card;
     [HideInInspector] public List<GameObject> stackList;
     [HideInInspector] public bool checkOnce;
+    private Transform combatOpponent;
     // Start is called before the first frame update
     void Start()
     {
@@ -23,25 +24,18 @@ public class Villager : MonoBehaviour
     private void OnMouseDown()
     {
         checkOnce = false;
+        combatOpponent = null;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        MobController mob = collision.GetComponent<MobController>();
-        // if (mob != null)
-        // {
-        //     InitiateCombat(collision.transform);
-        // }
-        if (collision.CompareTag("Rabbit"))
+        //store potential combat opponent
+        if (collision.CompareTag("Rabbit") || collision.CompareTag("Weasel"))
         {
-            InitiateCombat(collision.transform);
-        }
-        if (collision.CompareTag("Weasel"))
-        {
-            InitiateCombat(collision.transform);
+            combatOpponent = collision.transform;
         }
     }
-
+    
     private void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.gameObject.layer == 6)
@@ -109,19 +103,38 @@ public class Villager : MonoBehaviour
         }
     }
 
-    void InitiateCombat(Transform rabbit)
+    void InitiateCombat(Transform opponent)
     {
         float spaceBetween = 2.5f;
-        Vector3 midPoint = (this.transform.position + rabbit.position) / 2;
+        Vector3 midPoint = (this.transform.position + opponent.position) / 2;
         Vector3 villagerPosition = new Vector3(midPoint.x, midPoint.y + spaceBetween / 2, 0);
-        Vector3 rabbitPosition = new Vector3(midPoint.x, midPoint.y - spaceBetween / 2, 0);
+        Vector3 opponentPosition = new Vector3(midPoint.x, midPoint.y - spaceBetween / 2, 0);
 
-        this.transform.position = villagerPosition;  //villager moves to top position
-        rabbit.position = rabbitPosition;           //rabbit is at bottom position
+        this.transform.position = villagerPosition; // Villager moves to top position
+        opponent.position = opponentPosition; // Opponent moves to bottom position
 
-        StartCoroutine(Combat(rabbit.gameObject, villagerPosition, rabbitPosition));
+        StartCoroutine(Combat(opponent.gameObject, villagerPosition, opponentPosition));
     }
 
+    IEnumerator Combat(GameObject opponent, Vector3 villagerPosition, Vector3 opponentPosition)
+    {
+        Health villagerHealth = GetComponent<Health>();
+        Health opponentHealth = opponent ? opponent.GetComponent<Health>() : null;
+
+        while (villagerHealth.currentHealth > 0 && opponentHealth && opponentHealth.currentHealth > 0)
+        {
+            opponentHealth.TakeDamage(1);
+            yield return new WaitForSeconds(1.0f);
+
+            if (opponentHealth.currentHealth <= 0) break;
+
+            villagerHealth.TakeDamage(1);
+            yield return new WaitForSeconds(1.0f);
+
+            this.transform.position = villagerPosition; // Reset villager position
+            if (opponent) opponent.transform.position = opponentPosition; // Reset opponent position if still exists
+        }
+    }
 
     void ClearParentChildRelations(GameCard card)
     {
@@ -144,31 +157,31 @@ public class Villager : MonoBehaviour
         }
     }
 
-    IEnumerator Combat(GameObject mob, Vector3 villagerPosition, Vector3 mobPosition)
-    {
-        Health villagerHealth = GetComponent<Health>();
-        Health mobHealth = mob.GetComponent<Health>();
+    // IEnumerator Combat(GameObject mob, Vector3 villagerPosition, Vector3 mobPosition)
+    // {
+    //     Health villagerHealth = GetComponent<Health>();
+    //     Health mobHealth = mob.GetComponent<Health>();
 
-        while (villagerHealth.currentHealth > 0 && mobHealth.currentHealth > 0)
-        {
-            AttackAnimation(this.transform, villagerPosition, mob.transform);
-            mobHealth.TakeDamage(1);
-            yield return new WaitForSeconds(1.0f);
+    //     while (villagerHealth.currentHealth > 0 && mobHealth.currentHealth > 0)
+    //     {
+    //         AttackAnimation(this.transform, villagerPosition, mob.transform);
+    //         mobHealth.TakeDamage(1);
+    //         yield return new WaitForSeconds(1.0f);
 
-            this.transform.position = villagerPosition;  //reset villager pos
-            mob.transform.position = mobPosition;        //reset mob pos
+    //         this.transform.position = villagerPosition;  //reset villager pos
+    //         mob.transform.position = mobPosition;        //reset mob pos
 
-            if (mobHealth.currentHealth > 0)
-            {
-                AttackAnimation(mob.transform, mobPosition, this.transform);
-                villagerHealth.TakeDamage(1);
-                yield return new WaitForSeconds(1.0f);
+    //         if (mobHealth.currentHealth > 0)
+    //         {
+    //             AttackAnimation(mob.transform, mobPosition, this.transform);
+    //             villagerHealth.TakeDamage(1);
+    //             yield return new WaitForSeconds(1.0f);
 
-                this.transform.position = villagerPosition;  //reset villager pos
-                mob.transform.position = mobPosition;        //reset mob pos
-            }
-        }
-    }
+    //             this.transform.position = villagerPosition;  //reset villager pos
+    //             mob.transform.position = mobPosition;        //reset mob pos
+    //         }
+    //     }
+    // }
 
     void AttackAnimation(Transform combatant, Vector3 combatPosition, Transform target)
     {
@@ -202,7 +215,6 @@ public class Villager : MonoBehaviour
         //position
         combatant.position = originalPosition;
     }
-
 
     IEnumerator ResetPosition(Transform combatant, Vector3 originalPosition)
     {
