@@ -56,7 +56,7 @@ public class Resource : MonoBehaviour
         
         if (collision.gameObject.layer == 6)
         {
-            if (GameCard.mouseUp && card.simulated && (collision.CompareTag("Resource") || collision.CompareTag("Villager")) && collision.gameObject != card.child && collision.gameObject != card.parent)
+            if (GameCard.mouseUp && card.simulated && (collision.CompareTag("Resource") || collision.CompareTag("Villager") || collision.CompareTag("Coin")) && collision.gameObject != card.child && collision.gameObject != card.parent)
             {
                 GameManager.instance.StackCard(gameObject, collision.gameObject);
                 GameCard.mouseUp = false;

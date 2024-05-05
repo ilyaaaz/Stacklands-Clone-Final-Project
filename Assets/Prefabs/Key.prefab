@@ -172,15 +172,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2e518daf429c4630aaa4b77110b3ed9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  value: -1
+  value: 3
   isStack: 0
   simulated: 0
   startPos: {x: 0, y: 0, z: 0}
   parentOrigin: {x: 0, y: 0, z: 0}
   child: {fileID: 0}
   parent: {fileID: 0}
-  childCard: {fileID: 0}
   parentCard: {fileID: 0}
+  childCard: {fileID: 0}
   materials: []
   matchingNum: 
   materialSize: 0

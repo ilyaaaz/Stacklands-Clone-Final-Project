@@ -27,7 +27,8 @@ public class SellArea : MonoBehaviour
         {
             for (int i = 0; i < card.value; i++)
             {
-                Instantiate(Coin, transform.position, Quaternion.identity);
+                GameObject coin = Instantiate(Coin, transform.position, Quaternion.identity);
+                coin.GetComponent<GameCard>().startPos = gameObject.transform.position + Vector3.down * 3f;
             }
             GameManager.instance.coinNum += card.value;
             GameManager.instance.CoinUpdate();

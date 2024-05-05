@@ -292,4 +292,6 @@ public class GameCard : MonoBehaviour
         rb.drag = 8;
         cld.isTrigger = true;
     }
+
+
 }

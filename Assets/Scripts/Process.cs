@@ -36,7 +36,7 @@ public class Process : MonoBehaviour
 
         if (timer >= 0.1f)
         {
-            currentTime += speed;
+            currentTime += speed * GameManager.instance.gameSpeed;
             timer = 0f;
         }
         
@@ -68,6 +68,7 @@ public class Process : MonoBehaviour
         for (int i = 0; i < deleteList.Count; i++)
         {
             Destroy(deleteList[i]);
+            GameManager.instance.cardNum--;
         }
     }
 
