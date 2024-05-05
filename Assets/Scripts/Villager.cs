@@ -28,7 +28,15 @@ public class Villager : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         MobController mob = collision.GetComponent<MobController>();
-        if (mob != null)
+        // if (mob != null)
+        // {
+        //     InitiateCombat(collision.transform);
+        // }
+        if (collision.CompareTag("Rabbit"))
+        {
+            InitiateCombat(collision.transform);
+        }
+        if (collision.CompareTag("Weasel"))
         {
             InitiateCombat(collision.transform);
         }
@@ -101,21 +109,19 @@ public class Villager : MonoBehaviour
         }
     }
 
-    void InitiateCombat(Transform mob)
+    void InitiateCombat(Transform rabbit)
     {
         float spaceBetween = 2.5f;
-        Vector3 midPoint = (this.transform.position + mob.position) / 2;
-        this.enabled = false;
-        GameCard card = GetComponent<GameCard>();
-        ClearParentChildRelations(card);
+        Vector3 midPoint = (this.transform.position + rabbit.position) / 2;
+        Vector3 villagerPosition = new Vector3(midPoint.x, midPoint.y + spaceBetween / 2, 0);
+        Vector3 rabbitPosition = new Vector3(midPoint.x, midPoint.y - spaceBetween / 2, 0);
 
-        Vector3 mobPosition = new Vector3(midPoint.x, midPoint.y + spaceBetween / 2, 0);
-        Vector3 villagerPosition = new Vector3(midPoint.x, midPoint.y - spaceBetween / 2, 0);
-        mob.position = mobPosition;
-        this.transform.position = villagerPosition;
+        this.transform.position = villagerPosition;  //villager moves to top position
+        rabbit.position = rabbitPosition;           //rabbit is at bottom position
 
-        StartCoroutine(Combat(mob.gameObject, villagerPosition, mobPosition));
+        StartCoroutine(Combat(rabbit.gameObject, villagerPosition, rabbitPosition));
     }
+
 
     void ClearParentChildRelations(GameCard card)
     {

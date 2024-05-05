@@ -17,6 +17,8 @@ TagManager:
   - Shop
   - Mob
   - Idea
+  - Corpse
+  - Rabbit
   layers:
   - Default
   - TransparentFX
