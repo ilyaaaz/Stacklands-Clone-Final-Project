@@ -17,24 +17,22 @@ public class WeaselSpawner : MonoBehaviour
 
     IEnumerator SpawnWeasel()
     {
-        while (!hasSpawned) //ensure weasel spawns only once
+        while (!hasSpawned)
         {
             yield return new WaitForSeconds(Random.Range(minSpawnDelay, maxSpawnDelay));
-            if (GameManager.instance.currentState == GameManager.STATE.Stop)
+            if (GameManager.instance.currentState == GameManager.STATE.Stop && !GameManager.instance.duringFeed)
             {
                 Vector3 spawnPosition = GetSpawnPosition();
                 GameObject weaselInstance = Instantiate(weaselPrefab, spawnPosition, Quaternion.identity);
-                hasSpawned = true; //no further spawns
-                weaselInstance.GetComponent<WeaselController>().InitializeMovement();
+                hasSpawned = true; //prevent further spawning
             }
         }
     }
 
     Vector3 GetSpawnPosition()
     {
-        // Ensure spawn is always horizontal and offscreen
-        float yPos = Random.Range(mainCam.ViewportToWorldPoint(new Vector3(0, 0, 0)).y, mainCam.ViewportToWorldPoint(new Vector3(0, 1, 0)).y);
-        float xPos = Random.value > 0.5 ? mainCam.ViewportToWorldPoint(new Vector3(1.1f, 0, 0)).x : mainCam.ViewportToWorldPoint(new Vector3(-0.1f, 0, 0)).x;
+        float yPos = Random.Range(-5.7f, 3.2f); //ensure it spawns within vertical bounds
+        float xPos = mainCam.ViewportToWorldPoint(new Vector3(1.1f, 0, 0)).x; //start just outside the right of the camera view
         return new Vector3(xPos, yPos, 0);
     }
 }

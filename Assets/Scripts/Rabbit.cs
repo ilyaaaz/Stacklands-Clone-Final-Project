@@ -3,16 +3,21 @@ using UnityEngine;
 
 public class RabbitController : MonoBehaviour
 {
-    public float moveInterval = 15f;
+    public float moveInterval = 20f;
     public float moveDuration = 2f;
     public float moveSpeed = 2f;
     private Vector2 targetPosition;
     private float timer = 0f;
     private bool isMoving = false;
-    private bool isCombat = false; 
+    private bool isCombat = false;
 
     public float health = 5f;
     private Animator animator;
+
+    private float minX = -9f;
+    private float maxX = 8.5f;
+    private float minY = -5f;
+    private float maxY = 3f;
 
     private void Start()
     {
@@ -22,14 +27,17 @@ public class RabbitController : MonoBehaviour
 
     private void Update()
     {
-        HandleMovement();
+        if (!isCombat) // Only handle movement if not in combat
+        {
+            HandleMovement();
+        }
         CheckHealth();
     }
 
     private void HandleMovement()
     {
         timer += Time.deltaTime;
-        if (timer >= moveInterval && !isMoving && !isCombat)
+        if (timer >= moveInterval && !isMoving)
         {
             StartCoroutine(MoveToPosition());
             timer = 0f;
@@ -44,7 +52,8 @@ public class RabbitController : MonoBehaviour
 
         while (Time.time < startTime + moveDuration)
         {
-            transform.position = Vector2.Lerp(startPosition, targetPosition, (Time.time - startTime) / moveDuration);
+            float progress = (Time.time - startTime) / moveDuration;
+            transform.position = Vector2.Lerp(startPosition, targetPosition, progress);
             yield return null;
         }
 
@@ -55,9 +64,12 @@ public class RabbitController : MonoBehaviour
 
     private void ChooseNewTargetPosition()
     {
-        float randomX = Random.Range(-3f, 3f);
-        float randomY = Random.Range(-3f, 3f);
-        targetPosition = new Vector2(transform.position.x + randomX, transform.position.y + randomY);
+        float randomX = Random.Range(-2f, 2f);
+        float randomY = Random.Range(-2f, 2f);
+        targetPosition = new Vector2(
+            Mathf.Clamp(transform.position.x + randomX, minX, maxX),
+            Mathf.Clamp(transform.position.y + randomY, minY, maxY)
+        );
     }
 
     private void CheckHealth()
@@ -65,7 +77,7 @@ public class RabbitController : MonoBehaviour
         if (health <= 0)
         {
             Die();
-            isCombat = false; 
+            isCombat = false;
         }
     }
 
@@ -75,14 +87,7 @@ public class RabbitController : MonoBehaviour
         if (health > 0)
         {
             animator.SetTrigger("Hit");
-            RespondToAttack();
         }
-    }
-
-    private void RespondToAttack()
-    {
-        //attack back if attacked
-        animator.SetTrigger("Attack");
     }
 
     private void Die()
@@ -93,10 +98,10 @@ public class RabbitController : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        isCombat = true;
         if (collision.gameObject.CompareTag("Villager"))
         {
-            TakeDamage(1f);  
+            isCombat = true;
+            TakeDamage(1f);
         }
     }
 }
