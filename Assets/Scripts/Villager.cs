@@ -27,10 +27,9 @@ public class Villager : MonoBehaviour
         combatOpponent = null;
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    void OnTriggerEnter2D(Collider2D collision)
     {
-        //store potential combat opponent
-        if (collision.CompareTag("Rabbit") || collision.CompareTag("Weasel"))
+        if (collision.CompareTag("Rabbit") || collision.CompareTag("Weasel") || collision.CompareTag("Mob"))
         {
             combatOpponent = collision.transform;
         }
@@ -38,6 +37,15 @@ public class Villager : MonoBehaviour
     
     private void OnTriggerStay2D(Collider2D collision)
     {
+        if ((collision.CompareTag("Rabbit") || collision.CompareTag("Weasel") || collision.CompareTag("Mob")) && 
+            GameManager.instance.currentCard == gameObject && GameCard.mouseUp)
+        {
+            if (combatOpponent != null)
+            {
+                InitiateCombat(combatOpponent);
+                GameCard.mouseUp = false; 
+            }
+        }
         if (collision.gameObject.layer == 6)
         {
             if (GameCard.mouseUp && card.simulated)
@@ -52,6 +60,19 @@ public class Villager : MonoBehaviour
                     GameManager.instance.SeparateCard(gameObject, collision.gameObject);
                 }
             }
+        }
+    }
+
+    void HandleCardInteraction(Collider2D collision)
+    {
+        if (GameCard.mouseUp && card.simulated)
+        {
+            GameManager.instance.StackCard(gameObject, collision.gameObject);
+            GameCard.mouseUp = false;
+        }
+        else if (!card.isStack && !GameCard.mouseHold)
+        {
+            GameManager.instance.SeparateCard(gameObject, collision.gameObject);
         }
     }
 
@@ -105,23 +126,27 @@ public class Villager : MonoBehaviour
 
     void InitiateCombat(Transform opponent)
     {
-        float spaceBetween = 2.5f;
-        Vector3 midPoint = (this.transform.position + opponent.position) / 2;
-        Vector3 villagerPosition = new Vector3(midPoint.x, midPoint.y + spaceBetween / 2, 0);
-        Vector3 opponentPosition = new Vector3(midPoint.x, midPoint.y - spaceBetween / 2, 0);
+        if (opponent != null)
+        {
+            float spaceBetween = 2.5f;
+            Vector3 midPoint = (transform.position + opponent.position) / 2;
+            Vector3 villagerPosition = new Vector3(midPoint.x, midPoint.y + spaceBetween / 2, 0);
+            Vector3 opponentPosition = new Vector3(midPoint.x, midPoint.y - spaceBetween / 2, 0);
 
-        this.transform.position = villagerPosition; // Villager moves to top position
-        opponent.position = opponentPosition; // Opponent moves to bottom position
+            // Move both characters to their combat positions
+            transform.position = villagerPosition;
+            opponent.position = opponentPosition;
 
-        StartCoroutine(Combat(opponent.gameObject, villagerPosition, opponentPosition));
+            StartCoroutine(Combat(opponent.gameObject, villagerPosition, opponentPosition));
+        }
     }
 
     IEnumerator Combat(GameObject opponent, Vector3 villagerPosition, Vector3 opponentPosition)
     {
         Health villagerHealth = GetComponent<Health>();
-        Health opponentHealth = opponent ? opponent.GetComponent<Health>() : null;
+        Health opponentHealth = opponent.GetComponent<Health>();
 
-        while (villagerHealth.currentHealth > 0 && opponentHealth && opponentHealth.currentHealth > 0)
+        while (villagerHealth.currentHealth > 0 && opponentHealth.currentHealth > 0)
         {
             opponentHealth.TakeDamage(1);
             yield return new WaitForSeconds(1.0f);
@@ -131,7 +156,7 @@ public class Villager : MonoBehaviour
             villagerHealth.TakeDamage(1);
             yield return new WaitForSeconds(1.0f);
 
-            this.transform.position = villagerPosition; // Reset villager position
+            transform.position = villagerPosition; // Reset villager position
             if (opponent) opponent.transform.position = opponentPosition; // Reset opponent position if still exists
         }
     }
@@ -156,6 +181,49 @@ public class Villager : MonoBehaviour
             }
         }
     }
+
+    // void AttackAnimation(Transform combatant, Vector3 combatPosition, Transform target)
+    // {
+    //     Vector3 attackPosition = combatPosition + (target.position - combatPosition) * 0.1f + new Vector3(0, 0.3f, 0);
+    //     StartCoroutine(PerformAttack(combatant, combatPosition, attackPosition));
+    // }
+
+    // IEnumerator PerformAttack(Transform combatant, Vector3 originalPosition, Vector3 attackPosition)
+    // {
+    //     float attackTime = 0.1f;
+    //     for (float t = 0; t < 1; t += Time.deltaTime / attackTime)
+    //     {
+    //         combatant.position = Vector3.Lerp(originalPosition, attackPosition, t);
+    //         yield return null;
+    //     }
+    //     yield return new WaitForSeconds(0.1f);
+    //     for (float t = 0; t < 1; t += Time.deltaTime / attackTime)
+    //     {
+    //         combatant.position = Vector3.Lerp(attackPosition, originalPosition, t);
+    //         yield return null;
+    //     }
+    // }
+
+    // void ClearParentChildRelations(GameCard card)
+    // {
+    //     if (card != null)
+    //     {
+    //         card.parent = null;
+    //         card.child = null;
+    //         if (card.parentCard != null)
+    //         {
+    //             card.parentCard.child = null;
+    //             card.parentCard.childCard = null;
+    //             card.parentCard = null;
+    //         }
+    //         if (card.childCard != null)
+    //         {
+    //             card.childCard.parent = null;
+    //             card.childCard.parentCard = null;
+    //             card.childCard = null;
+    //         }
+    //     }
+    // }
 
     // IEnumerator Combat(GameObject mob, Vector3 villagerPosition, Vector3 mobPosition)
     // {
@@ -183,43 +251,43 @@ public class Villager : MonoBehaviour
     //     }
     // }
 
-    void AttackAnimation(Transform combatant, Vector3 combatPosition, Transform target)
-    {
-        //point slightly in front of the target to simulate an attack landing
-        Vector3 attackPosition = combatPosition + (target.position - combatPosition) * 0.1f + new Vector3(0, 0.3f, 0);
+    // void AttackAnimation(Transform combatant, Vector3 combatPosition, Transform target)
+    // {
+    //     //point slightly in front of the target to simulate an attack landing
+    //     Vector3 attackPosition = combatPosition + (target.position - combatPosition) * 0.1f + new Vector3(0, 0.3f, 0);
 
-        //attack move
-        StartCoroutine(PerformAttack(combatant, combatPosition, attackPosition));
-    }
+    //     //attack move
+    //     StartCoroutine(PerformAttack(combatant, combatPosition, attackPosition));
+    // }
 
-    IEnumerator PerformAttack(Transform combatant, Vector3 originalPosition, Vector3 attackPosition)
-    {
-        //attack pos
-        float attackTime = 0.1f;
-        for (float t = 0; t < 1; t += Time.deltaTime / attackTime)
-        {
-            combatant.position = Vector3.Lerp(originalPosition, attackPosition, t);
-            yield return null;
-        }
+    // IEnumerator PerformAttack(Transform combatant, Vector3 originalPosition, Vector3 attackPosition)
+    // {
+    //     //attack pos
+    //     float attackTime = 0.1f;
+    //     for (float t = 0; t < 1; t += Time.deltaTime / attackTime)
+    //     {
+    //         combatant.position = Vector3.Lerp(originalPosition, attackPosition, t);
+    //         yield return null;
+    //     }
 
-        //attack pos pause
-        yield return new WaitForSeconds(0.1f);
+    //     //attack pos pause
+    //     yield return new WaitForSeconds(0.1f);
 
-        //original combat pos
-        for (float t = 0; t < 1; t += Time.deltaTime / attackTime)
-        {
-            combatant.position = Vector3.Lerp(attackPosition, originalPosition, t);
-            yield return null;
-        }
+    //     //original combat pos
+    //     for (float t = 0; t < 1; t += Time.deltaTime / attackTime)
+    //     {
+    //         combatant.position = Vector3.Lerp(attackPosition, originalPosition, t);
+    //         yield return null;
+    //     }
 
-        //position
-        combatant.position = originalPosition;
-    }
+    //     //position
+    //     combatant.position = originalPosition;
+    // }
 
-    IEnumerator ResetPosition(Transform combatant, Vector3 originalPosition)
-    {
-        yield return new WaitForSeconds(0.5f);  //wait
-        combatant.position = originalPosition;  //reset position
-    }
+    // IEnumerator ResetPosition(Transform combatant, Vector3 originalPosition)
+    // {
+    //     yield return new WaitForSeconds(0.5f);  //wait
+    //     combatant.position = originalPosition;  //reset position
+    // }
 
 }
