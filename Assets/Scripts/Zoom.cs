@@ -8,7 +8,14 @@ public class Zoom : MonoBehaviour
     float zoomSpeed = 8f;
     float minZoom = 3f;
     float maxZoom = 12f;
+    [HideInInspector] public bool enableDrag;
+    bool drag = false;
+    Vector3 offSet, origin;
 
+    private void Start()
+    {
+        enableDrag = true;
+    }
     void Update()
     {
         float scroll = Input.GetAxis("Mouse ScrollWheel") * zoomSpeed;
@@ -22,5 +29,27 @@ public class Zoom : MonoBehaviour
             zoomcam.fieldOfView -= scroll;
             zoomcam.fieldOfView = Mathf.Clamp(zoomcam.fieldOfView, minZoom, maxZoom);
         }
+
+        if (enableDrag)
+        {
+            if (Input.GetMouseButton(0))
+            {
+                offSet = Camera.main.ScreenToWorldPoint(Input.mousePosition) - Camera.main.transform.position;
+                if (!drag)
+                {
+                    drag = true;
+                    origin = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                }
+            }
+            else
+            {
+                drag = false;
+            }
+
+            if (drag)
+            {
+                Camera.main.transform.position = origin - offSet;
+            }
+        } 
     }
 }

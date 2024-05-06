@@ -6,6 +6,7 @@ public class Food : MonoBehaviour
 {
     GameCard card;
     public int foodPoint;
+    public GameObject foodSource;
     // Start is called before the first frame update
     void Start()
     {
@@ -60,7 +61,7 @@ public class Food : MonoBehaviour
         
         if (collision.gameObject.layer == 6)
         {
-            if (GameCard.mouseUp && card.simulated && (collision.CompareTag("Food") || collision.CompareTag("Resource") || collision.CompareTag("Coin")) && collision.gameObject != card.child && collision.gameObject != card.parent)
+            if (GameCard.mouseUp && card.simulated && (collision.CompareTag("Food") || collision.CompareTag("Resource") || collision.CompareTag("Coin") || collision.name == "Soil(Clone)") && collision.gameObject != card.child && collision.gameObject != card.parent)
             {
                 GameManager.instance.StackCard(gameObject, collision.gameObject);
                 GameCard.mouseUp = false;

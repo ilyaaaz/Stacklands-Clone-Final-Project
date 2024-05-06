@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 6116779727030141522}
   - component: {fileID: -3081425579202157856}
   - component: {fileID: -2723397725998926525}
+  - component: {fileID: -6224107216384682659}
   m_Layer: 6
   m_Name: Rock
   m_TagString: Structure
@@ -179,8 +180,8 @@ MonoBehaviour:
   parentOrigin: {x: 0, y: 0, z: 0}
   child: {fileID: 0}
   parent: {fileID: 0}
-  childCard: {fileID: 0}
   parentCard: {fileID: 0}
+  childCard: {fileID: 0}
   materials: []
   matchingNum: 
   materialSize: 0
@@ -202,3 +203,15 @@ MonoBehaviour:
   - {fileID: 4593602674261185754, guid: f2215f3adb9a348c0bcbd61662da3644, type: 3}
   - {fileID: 131287027661842051, guid: 9e9e85fa8ac567f4b99b71b1654d3688, type: 3}
   times: 2
+--- !u!114 &-6224107216384682659
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3749499101101271603}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec836ce0311bcbc49ba1aa1d6a96be83, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

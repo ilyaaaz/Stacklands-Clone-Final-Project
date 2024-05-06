@@ -207,7 +207,7 @@ public class GameManager : MonoBehaviour
 
     void ProcessBarCheck(GameObject bot)
     {
-        if (bot.CompareTag("Structure"))
+        if (bot.CompareTag("Structure") && bot.GetComponent<Product>().times > 0)
         {
             ProcessBarCreate(bot, 10f);
         }
@@ -233,6 +233,17 @@ public class GameManager : MonoBehaviour
         {
             barProcess.deleteList.Add(stack[i]);
         }
+    }
+
+    public void ProcessBarCreateWithProduct(GameObject bot, GameObject product, float time)
+    {
+        GameObject newBar = Instantiate(processBar);
+        newBar.transform.SetParent(bot.transform);
+        newBar.GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
+        Process barProcess = newBar.GetComponent<Process>();
+        barProcess.totalTime = time;
+        barProcess.product = product;
+        barProcess.deleteList.Add(bot.GetComponent<GameCard>().child);
     }
 
     public void ideasFoundCheck()
@@ -271,10 +282,12 @@ public class GameManager : MonoBehaviour
         //for each villager
         for (int i = 0; i < people.Count; i++)
         {
+            print(foods.Count);
             int eatNum = 0;
             //if no food left
             if (foods.Count == 0)
             {
+                everyoneFeed = false;
                 VillagerStarveText();
                 deathIndex = i;
                 break;
@@ -318,6 +331,7 @@ public class GameManager : MonoBehaviour
 
         if (everyoneFeed)
         {
+            print("aaaaa");
             StartNewMoonText();
         }
     }

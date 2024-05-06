@@ -10,12 +10,14 @@ public class HumbleBeginnings : MonoBehaviour
     [SerializeField] List<GameObject> list = new List<GameObject>();
     [SerializeField] List<GameObject> idea = new List<GameObject>();
     [SerializeField] List<float> percent = new List<float>();
+    Zoom gameCam;
     int cardIndex, count;
     float circleRadius = 2.5f;
     int ideaIndex, replaceCount;
 
     private void Awake()
     {
+        gameCam = GameObject.Find("Main Camera").GetComponent<Zoom>();
         titleText = GameObject.Find("TitleText (TMP)").GetComponent<TextMeshProUGUI>();
         detailedText = GameObject.Find("DetailedText (TMP)").GetComponent<TextMeshProUGUI>();
     }
@@ -38,6 +40,7 @@ public class HumbleBeginnings : MonoBehaviour
     }
     private void OnMouseDrag()
     {
+        gameCam.enableDrag = false;
         Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         transform.position = new Vector3(mousePos.x, mousePos.y, 0);
     }
@@ -48,6 +51,10 @@ public class HumbleBeginnings : MonoBehaviour
         detailedText.text = "";
     }
 
+    private void OnMouseUp()
+    {
+        gameCam.enableDrag = true;
+    }
     private void OnMouseOver()
     {
         titleText.text = "Humble Beginnings";
@@ -69,7 +76,7 @@ public class HumbleBeginnings : MonoBehaviour
             {
                 newCard = Instantiate(idea[ideaIndex], transform.position, Quaternion.identity);
                 idea.Remove(idea[ideaIndex]);
-                GameManager.instance.ideasFound.Add(newCard.name);
+                GameManager.instance.ideasFound.Add(newCard.name.Substring(0, name.Length - 7));
                 GameManager.instance.ideasFoundCheck();
             } else
             {
