@@ -10,6 +10,7 @@ public class RabbitController : MonoBehaviour
     private float timer = 0f;
     private bool isMoving = false;
     private bool isCombat = false;
+    private bool isDragging = false;
 
     public float health = 5f;
     private Animator animator;
@@ -18,16 +19,20 @@ public class RabbitController : MonoBehaviour
     private float maxX = 8.5f;
     private float minY = -5f;
     private float maxY = 3f;
+    private Vector3 dragOffset;
+    
+    private Zoom gameCam; //reference to the camera script that controls the camera movement
 
     private void Start()
     {
         animator = GetComponent<Animator>();
         ChooseNewTargetPosition();
+        gameCam = Camera.main.GetComponent<Zoom>(); //assuming your main camera has the Zoom script
     }
 
     private void Update()
     {
-        if (!isCombat) // Only handle movement if not in combat
+        if (!isCombat && !isDragging) //only handle movement if not in combat or being dragged
         {
             HandleMovement();
         }
@@ -94,6 +99,32 @@ public class RabbitController : MonoBehaviour
     {
         animator.SetTrigger("Die");
         this.enabled = false;
+    }
+
+    private void OnMouseDown()
+    {
+        Vector3 mousePos = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, transform.position.z));
+        dragOffset = transform.position - mousePos;
+        isDragging = true;
+        if (gameCam != null)
+        {
+            gameCam.enableDrag = false; //disable camera movement while dragging
+        }
+    }
+
+    private void OnMouseDrag()
+    {
+        Vector3 newPos = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, transform.position.z)) + dragOffset;
+        transform.position = new Vector3(Mathf.Clamp(newPos.x, minX, maxX), Mathf.Clamp(newPos.y, minY, maxY), newPos.z);
+    }
+
+    private void OnMouseUp()
+    {
+        isDragging = false;
+        if (gameCam != null)
+        {
+            gameCam.enableDrag = true;
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

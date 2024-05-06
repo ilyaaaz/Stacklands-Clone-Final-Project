@@ -82,14 +82,17 @@ public class HumbleBeginnings : MonoBehaviour
             {
                 newCard = Instantiate(list[cardIndex], transform.position, Quaternion.identity);
             }
-        
-            Vector3 circleCenter = transform.position;
+            GameCard gameCard = newCard.GetComponent<GameCard>();
 
-            float angle = count * Mathf.PI * 2f / 3;
-            float x = circleCenter.x + circleRadius * Mathf.Cos(angle);
-            float y = circleCenter.y + circleRadius * Mathf.Sin(angle);
-            Vector3 objectPosition = new Vector3(x, y, 0f);
-            newCard.GetComponent<GameCard>().startPos = objectPosition;
+            if (gameCard != null)
+            {
+                Vector3 circleCenter = transform.position;
+                float angle = count * Mathf.PI * 2f / 3;
+                float x = circleCenter.x + circleRadius * Mathf.Cos(angle);
+                float y = circleCenter.y + circleRadius * Mathf.Sin(angle);
+                Vector3 objectPosition = new Vector3(x, y, 0f);
+                gameCard.startPos = objectPosition;
+            }
             count++;
             if (count == 3)
             {
@@ -102,7 +105,7 @@ public class HumbleBeginnings : MonoBehaviour
     int randomIndex()
     {
         int result = 0;
-        // Create cumulative distribution array
+        //create cumulative distribution array
         float[] cumulative = new float[percent.Count];
         float total = 0;
 
@@ -112,10 +115,10 @@ public class HumbleBeginnings : MonoBehaviour
             cumulative[i] = total;
         }
 
-        // Generate random number between 0 and total of all percentages
+        //generate random number between 0 and total of all percentages
         float randomPoint = Random.Range(0, total);
 
-        // Determine which card corresponds to randomPoint
+        //determine which card corresponds to randomPoint
         for (int i = 0; i < cumulative.Length; i++)
         {
             if (randomPoint <= cumulative[i])
