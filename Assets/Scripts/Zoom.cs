@@ -30,6 +30,7 @@ public class Zoom : MonoBehaviour
             zoomcam.fieldOfView = Mathf.Clamp(zoomcam.fieldOfView, minZoom, maxZoom);
         }
 
+        
         if (enableDrag)
         {
             if (Input.GetMouseButton(0))
@@ -51,5 +52,6 @@ public class Zoom : MonoBehaviour
                 Camera.main.transform.position = origin - offSet;
             }
         } 
+        
     }
 }

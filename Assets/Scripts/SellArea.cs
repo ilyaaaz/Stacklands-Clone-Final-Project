@@ -23,23 +23,27 @@ public class SellArea : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         GameCard card = collision.GetComponent<GameCard>();
-        if (card.value >= 0)
+        if (card != null)
         {
-            for (int i = 0; i < card.value; i++)
+            if (card.value >= 0)
             {
-                GameObject coin = Instantiate(Coin, transform.position, Quaternion.identity);
-                coin.GetComponent<GameCard>().startPos = gameObject.transform.position + Vector3.down * 3f;
-            }
-            GameManager.instance.coinNum += card.value;
-            GameManager.instance.CoinUpdate();
+                for (int i = 0; i < card.value; i++)
+                {
+                    GameObject coin = Instantiate(Coin, transform.position, Quaternion.identity);
+                    coin.GetComponent<GameCard>().startPos = gameObject.transform.position + Vector3.down * 3f;
+                }
+                GameManager.instance.coinNum += card.value;
+                GameManager.instance.CoinUpdate();
 
-            SoundManager.instance.PlayCardSell();
-            //destroy sold card.
-            Destroy(collision.gameObject);
-        } else
-        {
-            print("a");
-            StartCoroutine(card.lerpCard(collision.gameObject, gameObject.transform.position + Vector3.down * 3f));
+                SoundManager.instance.PlayCardSell();
+                //destroy sold card.
+                Destroy(collision.gameObject);
+            }
+            else
+            {
+                print("a");
+                StartCoroutine(card.lerpCard(collision.gameObject, gameObject.transform.position + Vector3.down * 3f));
+            }
         }
     }
 }

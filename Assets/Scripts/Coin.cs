@@ -11,48 +11,9 @@ public class Coin : MonoBehaviour
         card = GetComponent<GameCard>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        //card.isColliding = false;
-        //card.currentState = GameCard.STATE.NoCard;
-    }
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        /*
-        if (!collision.CompareTag("Pack"))
-        {
-            card.isColliding = true;
-            if (card.currentState == GameCard.STATE.NoCard)
-            {
-
-            }
-            else if (card.currentState == GameCard.STATE.CardDrag)
-            {
-
-            }
-            else if (card.currentState == GameCard.STATE.CardRelease)
-            {
-                if (collision.CompareTag("Resource") || collision.CompareTag("Villager"))
-                {
-                    GameManager.instance.StackCard(gameObject, collision.gameObject);
-                    card.currentState = GameCard.STATE.NoCard;
-                } else
-                {
-                    if (!card.isStack)
-                    {
-                        GameManager.instance.SeparateCard(gameObject, collision.gameObject);
-                    }
-                }
-            }
-        }
-        */
         
         if (collision.gameObject.layer == 6)
         {
@@ -72,14 +33,4 @@ public class Coin : MonoBehaviour
         
     }
 
-    /*
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        //if same
-        if (collision.name == name && !card.isStack)
-        {
-            GameManager.instance.StackCard(gameObject, collision.gameObject);
-        }
-    }
-    */
 }
