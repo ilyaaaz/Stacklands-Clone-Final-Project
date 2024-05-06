@@ -1428,6 +1428,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   zoomcam: {fileID: 519420031}
+  enableDrag: 0
 --- !u!1 &618737758
 GameObject:
   m_ObjectHideFlags: 0

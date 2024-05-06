@@ -12,7 +12,7 @@ public class GameCard : MonoBehaviour
 {
     public int value = 0; //default value
     TextMeshProUGUI titleText, detailedText, valueText;
-
+    Zoom gameCam;
     
     Collider2D cld;
     Rigidbody2D rb;
@@ -43,6 +43,7 @@ public class GameCard : MonoBehaviour
     */
     private void Awake()
     {
+        gameCam = GameObject.Find("Main Camera").GetComponent<Zoom>();
         startPos = new Vector3(-7.85f, 2.85f, 0); //default value
         cld = GetComponent<Collider2D>();
         spr = GetComponent<SpriteRenderer>();
@@ -149,6 +150,7 @@ public class GameCard : MonoBehaviour
 
     private void OnMouseDrag()
     {
+        gameCam.enableDrag = false;
         //currentState = STATE.CardDrag;
         Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         //transform.position = new Vector3(mousePos.x, mousePos.y, 0);
@@ -169,6 +171,7 @@ public class GameCard : MonoBehaviour
 
     private void OnMouseOver()
     {
+        
         if (gameObject.name == "Coin(Clone)")
         {
             titleText.text = "COIN";
@@ -210,6 +213,7 @@ public class GameCard : MonoBehaviour
         titleText.text = "";
         detailedText.text = "";
         valueText.text = "";
+        
     }
 
 
@@ -232,6 +236,7 @@ public class GameCard : MonoBehaviour
         mouseUp = true;
         mouseHold = false;
         SortLayer();
+        gameCam.enableDrag = true;
     }
     void FollowParent()
     {

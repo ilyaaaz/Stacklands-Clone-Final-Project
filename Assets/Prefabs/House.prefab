@@ -14,10 +14,8 @@ GameObject:
   - component: {fileID: 6116779727030141522}
   - component: {fileID: -3081425579202157856}
   - component: {fileID: -2723397725998926525}
-  - component: {fileID: -6224107216384682659}
-  - component: {fileID: -1284076458395880965}
   m_Layer: 6
-  m_Name: Soil
+  m_Name: House
   m_TagString: Structure
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -79,7 +77,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 4f1d9b8b5f3ef4632a6acd4d8a26ce5b, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 283b771c8d77346889cdac2d75dc25ca, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -174,7 +172,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2e518daf429c4630aaa4b77110b3ed9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  value: 0
+  value: 3
   isStack: 0
   simulated: 0
   startPos: {x: 0, y: 0, z: 0}
@@ -183,10 +181,12 @@ MonoBehaviour:
   parent: {fileID: 0}
   parentCard: {fileID: 0}
   childCard: {fileID: 0}
-  materials: []
-  matchingNum: 
-  materialSize: 0
-  requireTime: 0
+  materials:
+  - {fileID: 4593602674261185754, guid: 6d56cb1bbe2bf4980a2741ad71e7d73e, type: 3}
+  - {fileID: 2391338999073672170, guid: ea47aa52ce6b9f341986fb043c43c3ea, type: 3}
+  matchingNum: 0100000002000000
+  materialSize: 3
+  requireTime: 30
 --- !u!114 &-2723397725998926525
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -201,33 +201,3 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   material: []
   times: -1
---- !u!114 &-6224107216384682659
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3749499101101271603}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ec836ce0311bcbc49ba1aa1d6a96be83, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &-1284076458395880965
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3749499101101271603}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7c67c751289a7b542906451a7de02c31, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  foodList:
-  - {fileID: 3181299387967772655, guid: 7bd38854605c38749bff2581106af421, type: 3}
-  - {fileID: 3181299387967772655, guid: 6c1d9441dc0b82742b8cdc89704fd23d, type: 3}
-  growTime:
-  - 120
-  - 120
