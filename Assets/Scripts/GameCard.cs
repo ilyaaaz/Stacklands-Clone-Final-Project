@@ -301,5 +301,32 @@ public class GameCard : MonoBehaviour
         cld.isTrigger = true;
     }
 
-
+    public void CardDestroy()
+    {
+        if (CompareTag("Coin"))
+        {
+            GameManager.instance.coinNum--;
+            GameManager.instance.CoinUpdate();
+        }
+        else if (CompareTag("Villager"))
+        {
+            GameManager.instance.people.Remove(gameObject);
+            GameManager.instance.FoodUpdate();
+            GameManager.instance.cardNum--;
+            GameManager.instance.StorageUpdate();
+        }
+        else if (CompareTag("Food"))
+        {
+            GameManager.instance.foodNum--;
+            GameManager.instance.foods.Remove(gameObject);
+            GameManager.instance.cardNum--;
+            GameManager.instance.StorageUpdate();
+        }
+        else
+        {
+            GameManager.instance.cardNum--;
+            GameManager.instance.StorageUpdate();
+        }
+        Destroy(gameObject);
+    }
 }

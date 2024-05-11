@@ -20,7 +20,6 @@ public class GameManager : MonoBehaviour
     int buttonState, deathIndex; //0 feed Villager, 1 uh oh, 2 start new Moon, 3 gameover.
 
     int maxStorage;
-    RaycastHit2D hit;
 
     public GameObject currentCard;
 

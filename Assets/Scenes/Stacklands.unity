@@ -5856,6 +5856,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pack: {fileID: 5137074014557321075, guid: 8f5991384aca400449cb6d70f3a12bcc, type: 3}
   price: 3
+  coinNeed: 0
 --- !u!61 &1670560522
 BoxCollider2D:
   m_ObjectHideFlags: 0

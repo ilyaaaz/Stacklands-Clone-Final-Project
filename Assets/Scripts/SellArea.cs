@@ -37,7 +37,7 @@ public class SellArea : MonoBehaviour
 
                 SoundManager.instance.PlayCardSell();
                 //destroy sold card.
-                Destroy(collision.gameObject);
+                card.CardDestroy();
             }
             else
             {
