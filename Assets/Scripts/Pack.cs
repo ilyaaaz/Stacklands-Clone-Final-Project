@@ -7,7 +7,7 @@ public class Pack : MonoBehaviour
     [SerializeField] GameObject pack;
     Collider2D cld;
     [SerializeField] int price;
-    int coinNeed;
+    public int coinNeed;
 
     private void Awake()
     {
@@ -29,20 +29,23 @@ public class Pack : MonoBehaviour
         {
             cld.enabled = true;
         }
-        if (coinNeed == 0)
+        if (coinNeed <= 0)
         {
             Instantiate(pack, transform.position + Vector3.down * 3, Quaternion.identity);
-            coinNeed = price;
+            coinNeed += price;
         }
     }
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerStay2D(Collider2D collision)
     {
+        
         if (collision.CompareTag("Coin"))
         {
             coinNeed--;
             SoundManager.instance.PlayBuyPack();
-            Destroy(collision.gameObject);
-            GameManager.instance.coinNum--;
+            collision.gameObject.GetComponent<GameCard>().CardDestroy();
+        } else
+        {
+            collision.gameObject.GetComponent<Rigidbody2D>().AddForce(Vector3.down * 15f);
         }
     }
 }
