@@ -20,6 +20,7 @@ TagManager:
   - Corpse
   - Rabbit
   - Weasel
+  - RestrictedArea
   layers:
   - Default
   - TransparentFX
