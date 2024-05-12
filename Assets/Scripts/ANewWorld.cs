@@ -9,9 +9,14 @@ public class ANewWorld : MonoBehaviour
     [SerializeField] List<GameObject> list = new List<GameObject>();
     int cardIndex;
     float circleRadius = 2.5f;
+    [SerializeField] SpriteRenderer remain;
+    [SerializeField] List<Sprite> remainUI = new List<Sprite>();
+    int remainNum;
+
     // Start is called before the first frame update
     void Start()
     {
+        remainNum = 4;
         cardIndex = 0;
     }
 
@@ -34,6 +39,11 @@ public class ANewWorld : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             mouseClick();
+            if (remainNum > 0)
+            {
+                remainNum--;
+                remain.sprite = remainUI[remainNum];
+            }
             SoundManager.instance.PlayOpenPack();
         }
     }

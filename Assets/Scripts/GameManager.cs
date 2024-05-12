@@ -318,8 +318,7 @@ public class GameManager : MonoBehaviour
                         //if food is less or equal to 2
                         if (foodNum <= 2)
                         {
-                            Destroy(foods[j]);
-                            cardNum--;
+                            foods[i].GetComponent<GameCard>().CardDestroy();
                             eatNum += foodNum;
                             if (eatNum == 2)
                             {
@@ -359,8 +358,7 @@ public class GameManager : MonoBehaviour
         {
             GameObject deadBody = Instantiate(corpse);
             deadBody.transform.position = people[deathIndex].transform.position;
-            Destroy(people[deathIndex]);
-            cardNum--;
+            people[deathIndex].GetComponent<GameCard>().CardDestroy();
             people.RemoveAt(deathIndex);
         }
         if (people.Count != 0)

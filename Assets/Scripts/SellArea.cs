@@ -32,8 +32,6 @@ public class SellArea : MonoBehaviour
                     GameObject coin = Instantiate(Coin, transform.position, Quaternion.identity);
                     coin.GetComponent<GameCard>().startPos = gameObject.transform.position + Vector3.down * 3f;
                 }
-                GameManager.instance.coinNum += card.value;
-                GameManager.instance.CoinUpdate();
 
                 SoundManager.instance.PlayCardSell();
                 //destroy sold card.

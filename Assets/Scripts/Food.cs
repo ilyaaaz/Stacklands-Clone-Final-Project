@@ -26,6 +26,10 @@ public class Food : MonoBehaviour
                 GameManager.instance.StackCard(gameObject, collision.gameObject);
                 GameCard.mouseUp = false;
             }
+            else if (!card.firstCheck && name == collision.name)
+            {
+                GameManager.instance.StackCard(gameObject, collision.gameObject);
+            }
             else
             {
                 if (!card.isStack && !GameCard.mouseHold)
@@ -34,7 +38,7 @@ public class Food : MonoBehaviour
                 }
             }
         }
-        
+        card.firstCheck = true;
     }
 
 }
