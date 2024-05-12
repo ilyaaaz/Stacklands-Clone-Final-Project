@@ -30,7 +30,7 @@ public class Product : MonoBehaviour
         GameObject selectedMaterial = material[index];
         GameObject newCard = Instantiate(selectedMaterial, transform.position, Quaternion.identity);
 
-        newCard.GetComponent<GameCard>().startPos = transform.position + Vector3.up * 2f;
+        newCard.GetComponent<GameCard>().startPos = transform.position + Vector3.up * 2.5f;
         times--;
     }
 }

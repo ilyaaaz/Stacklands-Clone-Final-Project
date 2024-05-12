@@ -173,7 +173,7 @@ public class GameManager : MonoBehaviour
             bot = botCard.child;
             botCard = bot.GetComponent<GameCard>();
         }
-        ProcessBarCheck(bot);
+        ProcessBarCheck(bot, top);
         StartCoroutine(topCard.lerpCard(top, bot.transform.position + Vector3.down * 0.3f));
         topCard.GetComponent<Collider2D>().enabled = false;
         //top.transform.position = bot.transform.position + Vector3.down * 0.3f;
@@ -204,9 +204,9 @@ public class GameManager : MonoBehaviour
         currentCard = null;
     }
 
-    void ProcessBarCheck(GameObject bot)
+    void ProcessBarCheck(GameObject bot, GameObject top)
     {
-        if (bot.CompareTag("Structure") && bot.GetComponent<Product>().times > 0)
+        if (bot.CompareTag("Structure") && bot.GetComponent<Product>().times > 0 && top.CompareTag("Villager"))
         {
             ProcessBarCreate(bot, 10f);
         }
@@ -277,6 +277,7 @@ public class GameManager : MonoBehaviour
         } else if (buttonState == 2)
         {
             currentState = STATE.Normal;
+            buttonState = 0;
         } else if (buttonState == 3)
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
@@ -291,7 +292,6 @@ public class GameManager : MonoBehaviour
         //for each villager
         for (int i = 0; i < people.Count; i++)
         {
-            print(foods.Count);
             int eatNum = 0;
             //if no food left
             if (foods.Count == 0)
@@ -318,7 +318,7 @@ public class GameManager : MonoBehaviour
                         //if food is less or equal to 2
                         if (foodNum <= 2)
                         {
-                            foods[i].GetComponent<GameCard>().CardDestroy();
+                            foods[j].GetComponent<GameCard>().CardDestroy();
                             eatNum += foodNum;
                             if (eatNum == 2)
                             {
@@ -339,7 +339,6 @@ public class GameManager : MonoBehaviour
 
         if (everyoneFeed)
         {
-            print("aaaaa");
             StartNewMoonText();
         }
     }
@@ -358,7 +357,7 @@ public class GameManager : MonoBehaviour
         {
             GameObject deadBody = Instantiate(corpse);
             deadBody.transform.position = people[deathIndex].transform.position;
-            people[deathIndex].GetComponent<GameCard>().CardDestroy();
+            Destroy(people[deathIndex]);
             people.RemoveAt(deathIndex);
         }
         if (people.Count != 0)

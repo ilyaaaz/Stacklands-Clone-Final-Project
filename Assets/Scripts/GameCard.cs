@@ -321,6 +321,7 @@ public class GameCard : MonoBehaviour
         {
             GameManager.instance.foodNum--;
             GameManager.instance.foods.Remove(gameObject);
+            GameManager.instance.FoodUpdate();
             GameManager.instance.cardNum--;
             GameManager.instance.StorageUpdate();
         }
