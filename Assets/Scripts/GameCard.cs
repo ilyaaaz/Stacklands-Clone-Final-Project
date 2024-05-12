@@ -29,6 +29,8 @@ public class GameCard : MonoBehaviour
     public int materialSize = 0;
     public float requireTime;
 
+    public bool firstCheck;
+
     Vector3 offSet;
 
     //public STATE currentState;
@@ -54,6 +56,7 @@ public class GameCard : MonoBehaviour
     }
     private void Start()
     {
+        firstCheck = false;
         rb.mass = 0.4f;
         //currentState = STATE.NoCard;
         parent = null;
@@ -150,6 +153,7 @@ public class GameCard : MonoBehaviour
 
     private void OnMouseDrag()
     {
+        firstCheck = true;
         gameCam.enableDrag = false;
         //currentState = STATE.CardDrag;
         Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -282,12 +286,10 @@ public class GameCard : MonoBehaviour
         {
             yield return new WaitForSeconds(0.01f);
             card.transform.position = Vector3.Lerp(card.transform.position, targetPos, 0.1f);
-            //cld.enabled = false;
         }
         if (Vector3.Distance(card.transform.position, targetPos) <= 0.01f)
         {
             card.transform.position = targetPos;
-            //originalPos = card.transform.position;
             StopCoroutine(lerpCard(card, startPos));
             SetDefault();
         }

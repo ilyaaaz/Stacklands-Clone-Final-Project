@@ -14,6 +14,9 @@ public class HumbleBeginnings : MonoBehaviour
     int cardIndex, count;
     float circleRadius = 2.5f;
     int ideaIndex, replaceCount;
+    [SerializeField] SpriteRenderer remain;
+    [SerializeField] List<Sprite> remainUI = new List<Sprite>();
+    int remainNum;
 
     private void Awake()
     {
@@ -24,6 +27,7 @@ public class HumbleBeginnings : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        remainNum = 2;
         cardIndex = 0;
         count = 0;
         if (idea.Count > 0)
@@ -62,6 +66,11 @@ public class HumbleBeginnings : MonoBehaviour
         if (Input.GetMouseButtonUp(0))
         {
             mouseClick();
+            if (remainNum > 0)
+            {
+                remainNum--;
+                remain.sprite = remainUI[remainNum];
+            }
             SoundManager.instance.PlayOpenPack();
         }
     }
