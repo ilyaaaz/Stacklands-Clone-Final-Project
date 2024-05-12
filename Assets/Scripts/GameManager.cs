@@ -245,15 +245,25 @@ public class GameManager : MonoBehaviour
         barProcess.deleteList.Add(bot.GetComponent<GameCard>().child);
     }
 
-    public void ideasFoundCheck()
+   public void ideasFoundCheck()
     {
         string sentence = "";
-        for (int i = 0; i < ideasFound.Count; i++)
+        foreach (string idea in ideasFound)
         {
-            sentence += "*" + ideasFound[i] + "\n";
+            string[] firstSplit = idea.Split('_');
+            if (firstSplit.Length > 1)
+            {
+                string[] secondSplit = firstSplit[1].Split('(');
+                if (secondSplit.Length > 0)
+                {
+                    sentence += "• " + secondSplit[0].Trim() + "\n"; 
+                }
+            }
         }
         ideaText.text = sentence;
     }
+
+
 
     public void moonButtonClick()
     {
