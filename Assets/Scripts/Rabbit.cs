@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class RabbitController : MonoBehaviour
 {
-    public float moveInterval = 20f;
+    public float moveInterval = 80f;
     public float moveDuration = 2f;
     public float moveSpeed = 2f;
     private Vector2 targetPosition;
