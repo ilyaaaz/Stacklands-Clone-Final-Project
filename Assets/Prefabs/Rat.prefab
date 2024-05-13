@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7504907879418858261}
   - component: {fileID: 8516819767986476030}
   - component: {fileID: -6111112046490169911}
-  - component: {fileID: 7428937272070195004}
+  - component: {fileID: 8558308664901555912}
   m_Layer: 6
   m_Name: Rat
   m_TagString: Mob
@@ -174,7 +174,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 5
   currentHealth: 5
---- !u!114 &7428937272070195004
+--- !u!114 &8558308664901555912
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -183,8 +183,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 4463371284818460278}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 594eabe84becdea4287d0fef5f5f52b1, type: 3}
+  m_Script: {fileID: 11500000, guid: 8baa76d0e7787de4eb2490c2d05a03d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 25
-  cooldownTime: 2
+  moveSpeed: 5
+  detectionRadius: 5
+  moveCooldown: 2

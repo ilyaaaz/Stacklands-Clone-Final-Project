@@ -128,16 +128,7 @@ public class Villager : MonoBehaviour
     {
         if (opponent != null)
         {
-            float spaceBetween = 2.5f;
-            Vector3 midPoint = (transform.position + opponent.position) / 2;
-            Vector3 villagerPosition = new Vector3(midPoint.x, midPoint.y + spaceBetween / 2, 0);
-            Vector3 opponentPosition = new Vector3(midPoint.x, midPoint.y - spaceBetween / 2, 0);
-
-            // Move both characters to their combat positions
-            transform.position = villagerPosition;
-            opponent.position = opponentPosition;
-
-            StartCoroutine(Combat(opponent.gameObject, villagerPosition, opponentPosition));
+            StartCoroutine(Combat(opponent.gameObject, transform.position, opponent.position));
         }
     }
 
@@ -146,20 +137,42 @@ public class Villager : MonoBehaviour
         Health villagerHealth = GetComponent<Health>();
         Health opponentHealth = opponent.GetComponent<Health>();
 
+        // Move to attack positions
+        yield return MoveToPosition(transform, (villagerPosition + opponentPosition) / 2 + new Vector3(0, 1, 0), 0.5f);
+        yield return MoveToPosition(opponent.transform, (villagerPosition + opponentPosition) / 2 - new Vector3(0, 1, 0), 0.5f);
+
+        // Simulate attacks
         while (villagerHealth.currentHealth > 0 && opponentHealth.currentHealth > 0)
         {
+            // Villager attacks
             opponentHealth.TakeDamage(1);
-            yield return new WaitForSeconds(1.0f);
+            yield return new WaitForSeconds(0.5f); // Pause for attack animation
 
             if (opponentHealth.currentHealth <= 0) break;
 
+            // Opponent attacks
             villagerHealth.TakeDamage(1);
-            yield return new WaitForSeconds(1.0f);
+            yield return new WaitForSeconds(0.5f); // Pause for attack animation
 
-            transform.position = villagerPosition; // Reset villager position
-            if (opponent) opponent.transform.position = opponentPosition; // Reset opponent position if still exists
+            // Return to original positions for a brief moment
+            yield return MoveToPosition(transform, villagerPosition, 0.25f);
+            if (opponent) yield return MoveToPosition(opponent.transform, opponentPosition, 0.25f);
         }
     }
+
+    IEnumerator MoveToPosition(Transform entity, Vector3 targetPosition, float duration)
+    {
+        Vector3 startPosition = entity.position;
+        float time = 0;
+        while (time < duration)
+        {
+            entity.position = Vector3.Lerp(startPosition, targetPosition, time / duration);
+            time += Time.deltaTime;
+            yield return null;
+        }
+        entity.position = targetPosition;
+    }
+
 
     void ClearParentChildRelations(GameCard card)
     {
